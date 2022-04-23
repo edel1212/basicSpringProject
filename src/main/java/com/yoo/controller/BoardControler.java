@@ -1,10 +1,15 @@
 package com.yoo.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yoo.domain.BoardVO;
 import com.yoo.service.BoardService;
 
 import lombok.AllArgsConstructor;
@@ -22,6 +27,13 @@ public class BoardControler {
 	public String list() {
 		log.info("list....");
 		return "/board/list";
+	}
+	
+	@PostMapping("/getList")
+	@ResponseBody
+	public List<BoardVO> getList(){
+		log.info("getList");
+		return boardService.getList();
 	}
 	
 }
