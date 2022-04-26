@@ -36,4 +36,10 @@ public class BoardControler {
 		return boardService.getList();
 	}
 	
+	@GetMapping("/register")
+	public String register() {
+		log.info("register..");
+		return "/board/register";
+	}
+	
 }

@@ -42,6 +42,5 @@
 	
 	</div>
 	<!-- End of Main Content -->
-	<!-- Core plugin JavaScript-->
     <script src="/resources/js/board/board.js"></script>
 <%@include file="../includes/footer.jsp" %>
