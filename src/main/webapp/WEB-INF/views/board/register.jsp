@@ -15,7 +15,7 @@
 				<div class='panel panel-default'>
 					<div class='panel-heading'>Board Register</div>
 					<div class='panel-body'>
-						<form role="form">
+						<form id="registerForm" role="form">
 							<div class="form-group">
 				            	<label>Title</label>
 				            	<input class="form-control" name='title' maxlength="100">

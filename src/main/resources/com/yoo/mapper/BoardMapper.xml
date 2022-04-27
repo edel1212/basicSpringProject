@@ -7,4 +7,17 @@
   	<select id="getList" resultType="com.yoo.domain.BoardVO">
   		SELECT * FROM tbl_board
   	</select>
+  	
+  	<insert id="register" parameterType="com.yoo.domain.BoardVO">
+  		INSERT INTO (
+  			bno, title, content, writer, regdate, updatedate
+  		) VALUES(
+  			(SELECT NEXTVAL(seq))
+  				, #{title}
+  				, #{content}
+  				, #{writer}
+  				, SYSDATE()
+  				, SYSDATE()
+  		);
+  	</insert>
   </mapper>
