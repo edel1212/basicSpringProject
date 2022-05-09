@@ -1,27 +1,24 @@
-"use strict";
+import { fetchHead } from "../common/common.js";
+let fetchFunc = (url) => { };
 window.onload = function () {
-    fetch("/board/getList", {
-        method: "POST",
-        headers: {
-            Accept: "application/json",
-        },
-    })
+    fetch("/board/getList", fetchHead)
         .then((response) => response.json())
         .then((data) => new Board().drawGrid(data))
         .catch((error) => console.log(error));
 };
-/**
- * @description : json으로 받아온 데이터를 그리는 함수
- */
 class Board {
     constructor() {
+        var _a;
         this.element = document.querySelector("#board");
-        this.element.addEventListener("click", (e) => {
-            let data = e.target.parentElement.getAttribute("data-id");
-            console.log(data);
-        });
+        if (this.element instanceof HTMLElement) {
+            (_a = this.element) === null || _a === void 0 ? void 0 : _a.addEventListener("click", (e) => {
+                let data = e.target.parentElement.getAttribute("data-id");
+                console.log(data);
+            });
+        }
     }
     drawGrid(data) {
+        var _a;
         let htmlCode = "";
         for (let i in data) {
             htmlCode += `<tr data-id=${data[i]["bno"]}>`;
@@ -42,7 +39,7 @@ class Board {
             htmlCode += "</td>";
             htmlCode += "</tr>";
         } //for
-        this.element.insertAdjacentHTML("afterbegin", htmlCode);
+        (_a = this.element) === null || _a === void 0 ? void 0 : _a.insertAdjacentHTML("afterbegin", htmlCode);
     }
 }
 //# sourceMappingURL=board.js.map

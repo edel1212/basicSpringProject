@@ -1,3 +1,13 @@
+type board = [
+  {
+    bno: string;
+    title: string;
+    writer: string;
+    regdate: string;
+    updatedate: string;
+  }
+];
+
 window.onload = function () {
   fetch("/board/getList", {
     method: "POST",
@@ -10,19 +20,17 @@ window.onload = function () {
     .catch((error) => console.log(error));
 };
 
-/**
- * @description : json으로 받아온 데이터를 그리는 함수
- */
 class Board {
-  private element: HTMLElement;
+  private element = document.querySelector("#board");
   constructor() {
-    this.element = document.querySelector("#board") as HTMLElement;
-    this.element.addEventListener("click", (e: any) => {
-      let data = e.target.parentElement.getAttribute("data-id");
-      console.log(data);
-    });
+    if (this.element instanceof HTMLElement) {
+      this.element?.addEventListener("click", (e: any) => {
+        let data = e.target.parentElement.getAttribute("data-id");
+        console.log(data);
+      });
+    }
   }
-  drawGrid(data: any) {
+  drawGrid(data: board) {
     let htmlCode: string = "";
     for (let i in data) {
       htmlCode += `<tr data-id=${data[i]["bno"]}>`;
@@ -43,6 +51,6 @@ class Board {
       htmlCode += "</td>";
       htmlCode += "</tr>";
     } //for
-    this.element.insertAdjacentHTML("afterbegin", htmlCode);
+    this.element?.insertAdjacentHTML("afterbegin", htmlCode);
   }
 }
