@@ -8,4 +8,7 @@ import com.yoo.domain.BoardVO;
 public interface BoardMapper {
 	public List<BoardVO> getList();
 	public int register(BoardVO vo);
+	public BoardVO get(Long bno);
+	public int update(Long bno);
+	public int delete(Long bno);
 }

@@ -1,22 +1,40 @@
-import { fetchHead } from "../common/common.js";
-let fetchFunc = (url) => { };
-window.onload = function () {
-    fetch("/board/getList", fetchHead)
-        .then((response) => response.json())
-        .then((data) => new Board().drawGrid(data))
-        .catch((error) => console.log(error));
+"use strict";
+window.onload = () => {
+    let list = new List();
 };
-class Board {
+class List {
     constructor() {
-        var _a;
+        var _a, _b;
         this.element = document.querySelector("#board");
+        this.regBtb = document.querySelector("#regBtn");
+        fetch("/board/getList", {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => this.drawGrid(data))
+            .catch((error) => console.log(error));
+        /**
+         * btn Event
+         */
         if (this.element instanceof HTMLElement) {
             (_a = this.element) === null || _a === void 0 ? void 0 : _a.addEventListener("click", (e) => {
-                let data = e.target.parentElement.getAttribute("data-id");
-                console.log(data);
+                let bno = e.target.parentElement.getAttribute("data-id");
+                localStorage.setItem("bno", bno);
+                location.href = "/board/get";
+            });
+        }
+        if (this.regBtb instanceof HTMLButtonElement) {
+            (_b = this.regBtb) === null || _b === void 0 ? void 0 : _b.addEventListener("click", () => {
+                location.href = "/board/register";
             });
         }
     }
+    /**
+     * draw list
+     */
     drawGrid(data) {
         var _a;
         let htmlCode = "";

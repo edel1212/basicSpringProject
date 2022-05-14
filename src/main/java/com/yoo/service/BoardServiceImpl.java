@@ -19,16 +19,32 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Override
 	public List<BoardVO> getList() {
-		// TODO Auto-generated method stub
 		log.info("servieImp - getList...");
 		return boardMapper.getList();
 	}
 
 	@Override
 	public int register(BoardVO vo) {
-		// TODO Auto-generated method stub
 		log.info("servieImp - regisger...");
 		return boardMapper.register(vo);
+	}
+
+	@Override
+	public BoardVO get(Long bno) {		
+		log.info("servieImp - Get...");
+		return boardMapper.get(bno);
+	}
+
+	@Override
+	public int update(Long bno) {
+		log.info("servieImp - update...");
+		return boardMapper.update(bno);
+	}
+
+	@Override
+	public int delete(Long bno) {
+		log.info("servieImp - delete...");
+		return boardMapper.delete(bno);
 	}
 
 }

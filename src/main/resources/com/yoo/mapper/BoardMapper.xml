@@ -9,15 +9,32 @@
   	</select>
   	
   	<insert id="register" parameterType="com.yoo.domain.BoardVO">
-  		INSERT INTO (
-  			bno, title, content, writer, regdate, updatedate
-  		) VALUES(
-  			(SELECT NEXTVAL(seq))
-  				, #{title}
-  				, #{content}
-  				, #{writer}
-  				, SYSDATE()
-  				, SYSDATE()
-  		);
+  		INSERT INTO tbl_board (
+				bno, title, content, writer, regdate, updatedate
+			) VALUES (
+				(select nextval(seq))
+				, #{title}
+				, #{content}
+				, #{writer}
+				, SYSDATE()
+				, SYSDATE()
+			)
   	</insert>
+  	
+  	<select id="get" resultType="com.yoo.domain.BoardVO" parameterType="Long">
+  		SELECT * FROM tbl_board WHERE bno = #{bno}
+  	</select>
+  	
+  	<update id="update">
+  		UPDATE tbl_board SET 
+  			title = #{title}
+  		  , content = #{content}
+  		  , writer = #{writer}
+  		  , updatedate = SYSDATE()
+  		WHERE bno = #{bno}
+  	</update>
+  	
+  	<delete id="delete">
+  		DELETE FROM tbl_board WHERE bno = #{bno}
+  	</delete>
   </mapper>

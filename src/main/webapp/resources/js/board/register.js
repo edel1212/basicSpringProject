@@ -1,5 +1,5 @@
 "use strict";
-window.onload = function () {
+window.onload = () => {
     new Register();
 };
 class Register {
@@ -14,11 +14,33 @@ class Register {
                 writer: this.content.value,
                 content: this.writer.value,
             };
-            //console.log(regidObj);
+            this.register(regidObj);
         });
         (_b = document.querySelector("#reset")) === null || _b === void 0 ? void 0 : _b.addEventListener("click", () => {
             alert("reset");
         });
+    }
+    register(data) {
+        fetch("/board/register", {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        })
+            .then((response) => response.json())
+            .then((result) => {
+            let obj = result;
+            if (obj.result === 1) {
+                alert("등록에 성공하였습니다.");
+                location.href = "/board/list";
+            }
+            else {
+                alert("등록에 실패하였습니다.");
+            }
+        })
+            .catch((error) => console.log(error));
     }
 }
 //# sourceMappingURL=register.js.map

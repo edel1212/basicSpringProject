@@ -1,9 +1,10 @@
 package com.yoo.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,7 +27,7 @@ public class BoardControler {
 	
 	@GetMapping("/list")
 	public String list() {
-		log.info("list....");
+		log.info("list Page");
 		return "/board/list";
 	}
 	
@@ -44,10 +45,31 @@ public class BoardControler {
 	}
 	
 	@PostMapping("/register")
-	public int register(@RequestBody BoardVO vo) {
+	@ResponseBody
+	public Map<String, Integer> register(@RequestBody BoardVO vo) {
 		log.info("register");
 		log.info(vo);
-		return boardService.register(vo);
+		Map<String, Integer> result = new HashMap<String, Integer>();
+		result.put("result", boardService.register(vo));
+		return result;
 	}
 	
+	@GetMapping("/get")
+	public String get() {
+		log.info("get Page");
+		return "/board/get";
+	}
+	
+	@ResponseBody
+	@PostMapping("/get")
+	public BoardVO get(@RequestBody Long bno) {
+		BoardVO result = boardService.get(bno);
+		return result;
+	}
+	
+	@ResponseBody
+	@PostMapping("/delete")
+	public int delete(@RequestBody Long bno) {
+		return boardService.delete(bno);
+	}
 }

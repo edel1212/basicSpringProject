@@ -13,8 +13,9 @@
 	
 	        <!-- DataTales Example -->
 	        <div class="card shadow mb-4">
-	            <div class="card-header py-3">
-	                <h6 class="m-0 font-weight-bold text-primary">DataTables</h6>
+	            <div class="card-header py-3" style="display: flex;justify-content: space-between;">
+	                <h6 class="m-0 font-weight-bold text-primary" style="line-height: 38px;">DataTables</h6>
+	                <button id="regBtn" type="button" class="btn btn-xs pull-right">Register</button>
 	            </div>
 	            <div class="card-body">
 	                <div class="table-responsive">
