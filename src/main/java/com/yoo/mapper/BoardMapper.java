@@ -9,6 +9,6 @@ public interface BoardMapper {
 	public List<BoardVO> getList();
 	public int register(BoardVO vo);
 	public BoardVO get(Long bno);
-	public int update(Long bno);
+	public int update(BoardVO vo);
 	public int delete(Long bno);
 }

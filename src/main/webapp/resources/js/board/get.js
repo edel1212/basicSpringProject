@@ -46,7 +46,6 @@ class Board {
          */
         if (this.modify instanceof HTMLButtonElement) {
             this.modify.addEventListener("click", () => {
-                var _a;
                 if (!this.modiBtnChang) {
                     const modifyFlag = confirm(`해당 게시물을 수정 하시겠습니까?`);
                     if (modifyFlag) {
@@ -54,12 +53,39 @@ class Board {
                         this.content.readOnly = false;
                         //modify btn Flag change
                         this.modiBtnChang = true;
-                        (_a = this.modify) === null || _a === void 0 ? void 0 : _a.insertAdjacentText("afterend", "\t Finish");
+                        if (this.modify instanceof HTMLButtonElement) {
+                            this.modify.innerHTML = "Change";
+                        }
                     }
                 }
                 else {
                     const modifyFlag = confirm(`해당 게시물을 수정을 완료하시겠습니까?`);
                     if (modifyFlag) {
+                        const modiObj = {
+                            bno: localStorage.getItem("bno"),
+                            title: this.title.value,
+                            content: this.content.value,
+                            writer: this.writer.value,
+                        };
+                        fetch("/board/modify", {
+                            method: "POST",
+                            headers: {
+                                Accept: "application/json",
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify(modiObj),
+                        })
+                            .then((response) => response.json())
+                            .then((result) => {
+                            console.log(`result ===> ${result}`);
+                            if (result === 1) {
+                                alert("수정에 성공하였습니다.");
+                            }
+                            else {
+                                alert("수정에 실패하였습니다");
+                            }
+                            location.href = "/board/list";
+                        });
                     }
                 }
             });

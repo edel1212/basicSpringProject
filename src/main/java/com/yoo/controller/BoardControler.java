@@ -68,6 +68,12 @@ public class BoardControler {
 	}
 	
 	@ResponseBody
+	@PostMapping("/modify")
+	public int modify(@RequestBody BoardVO vo) {
+		return boardService.update(vo);
+	}
+	
+	@ResponseBody
 	@PostMapping("/delete")
 	public int delete(@RequestBody Long bno) {
 		return boardService.delete(bno);

@@ -36,9 +36,9 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public int update(Long bno) {
+	public int update(BoardVO vo) {
 		log.info("servieImp - update...");
-		return boardMapper.update(bno);
+		return boardMapper.update(vo);
 	}
 
 	@Override

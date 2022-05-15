@@ -12,7 +12,7 @@ public interface BoardService {
 	//선택된 내용
 	public BoardVO get(Long bno);
 	//수정
-	public int update(Long bno);
+	public int update(BoardVO vo);
 	//삭제
 	public int delete(Long bno);
 }

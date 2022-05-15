@@ -25,7 +25,7 @@
   		SELECT * FROM tbl_board WHERE bno = #{bno}
   	</select>
   	
-  	<update id="update">
+  	<update id="update" parameterType="com.yoo.domain.BoardVO">
   		UPDATE tbl_board SET 
   			title = #{title}
   		  , content = #{content}

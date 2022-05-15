@@ -60,4 +60,19 @@ class List {
         (_a = this.element) === null || _a === void 0 ? void 0 : _a.insertAdjacentHTML("afterbegin", htmlCode);
     }
 }
+/***
+ * @Todo : https://heewon26.tistory.com/293?category=797491 확인하자 ..
+ */
+history.pushState(null, "", "");
+window.onpopstate = function (event) {
+    debugger;
+    const prevUrl = document.referrer;
+    if (prevUrl.indexOf("board/list") < 0) {
+        //뒤로가기를 한 페이지가 test.do 페이지가 아니면 뒤로가기, test.do 페이지면 새로고침합니다.
+        history.back();
+    }
+    else {
+        location.href = prevUrl;
+    }
+};
 //# sourceMappingURL=board.js.map
