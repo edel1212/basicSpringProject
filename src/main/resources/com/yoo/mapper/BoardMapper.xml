@@ -5,7 +5,8 @@
   
   <mapper namespace="com.yoo.mapper.BoardMapper">
   	<select id="getList" resultType="com.yoo.domain.BoardVO">
-  		SELECT * FROM tbl_board
+  		SELECT @ROWNUM:=@ROWNUM+1 AS rn ,board.* 
+  		FROM tbl_board board ,(SELECT @ROWNUM:=0) R
   	</select>
   	
   	<insert id="register" parameterType="com.yoo.domain.BoardVO">

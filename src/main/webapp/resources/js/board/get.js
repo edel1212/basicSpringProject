@@ -123,4 +123,11 @@ class Board {
         }
     }
 }
+/**
+ * @description : 수정 후 뒤로가기 버튼 사용시
+ *                다시 modifyPage로 이동하는 문제를 발견
+ *                따라서 해당 페이지에 들어올 경우 history를
+ *                /board/list로 변경하는 방법을 사용함
+ */
+history.replaceState(null, "goList", "/board/list");
 //# sourceMappingURL=get.js.map
