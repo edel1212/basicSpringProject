@@ -37,11 +37,34 @@
 	                </div>
 	            </div>
 	        </div>
-	
+			
+			<!-- paging-box -->
+			<div id="pull-righ" style="text-align: right">
+				<ul class="pagination">
+						<li class="pagiante_button previous">
+						<a class="page-link" href="#">
+							Previous
+						</a>
+						
+						
+						<li class="page-item">
+							<a class="page-link" href="#" >
+								2
+							</a>
+						</li>
+						
+						<li class="pagiante_button next">
+						<a class="page-link" href="#"  >
+							Next
+						</a>
+						</li>
+				</ul>
+			</div>
+			<!-- /paging-box -->
+			
 	    </div>
 	    <!-- /.container-fluid -->
 	
-	</div>
 	<!-- End of Main Content -->
     <script src="/resources/js/board/board.js"></script>
 <%@include file="../includes/footer.jsp" %>
