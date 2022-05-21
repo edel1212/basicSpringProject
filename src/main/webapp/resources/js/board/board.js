@@ -1,5 +1,7 @@
 "use strict";
 window.onload = () => {
+    let endPageNum = new EndPageNum();
+    endPageNum.drawPageNum(0, endPageNum.getEndPageNum());
     let list = new List();
 };
 class List {
@@ -58,6 +60,42 @@ class List {
             htmlCode += "</tr>";
         } //for
         (_a = this.element) === null || _a === void 0 ? void 0 : _a.insertAdjacentHTML("afterbegin", htmlCode);
+    }
+}
+/**
+ * @description : 마지막 페이지 번호를 가져옴
+ */
+class EndPageNum {
+    constructor() {
+        this.endPageNum = 0;
+        fetch("/board/getTotalCount", {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+            },
+        })
+            .then((reponse) => reponse.json())
+            .then((result) => {
+            this.endPageNum = Math.ceil(result / 10);
+        })
+            .catch((error) => console.log(error));
+    }
+    getEndPageNum() {
+        return this.endPageNum;
+    }
+    drawPageNum(selectNum, endPageNum) {
+        let pagNumEle = document.querySelector(".pagination");
+        if (pagNumEle instanceof HTMLUListElement) {
+            let liHTML = "";
+            for (let selectNum = 0; selectNum < endPageNum; selectNum++) {
+                // if(){
+                // }
+                liHTML += `<li class="page-item"><a class="page-link" href="#" >
+        ${selectNum + 1}
+        </a></li>`;
+            } //for
+            pagNumEle.innerHTML = liHTML;
+        }
     }
 }
 //# sourceMappingURL=board.js.map

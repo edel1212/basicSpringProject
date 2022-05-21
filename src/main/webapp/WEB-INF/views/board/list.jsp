@@ -41,7 +41,7 @@
 			<!-- paging-box -->
 			<div id="pull-righ" style="text-align: right">
 				<ul class="pagination">
-						<li class="pagiante_button previous">
+						<!-- <li class="pagiante_button previous">
 						<a class="page-link" href="#">
 							Previous
 						</a>
@@ -57,7 +57,7 @@
 						<a class="page-link" href="#"  >
 							Next
 						</a>
-						</li>
+						</li> -->
 				</ul>
 			</div>
 			<!-- /paging-box -->

@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.yoo.domain.Criteria;
+
 import lombok.extern.log4j.Log4j;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -27,9 +29,26 @@ public class BoardServiceTest {
 		assertNotNull(boardService);
 	}
 	
+	/**
+	 * @description : JUnit 테스트는 파라미터가 안들어간다!!
+	 * */
 	@Test
 	public void getListTest() {
-		log.info(boardService.getList());
+		Criteria criteria = new Criteria();
+		log.info(criteria);
+		log.info(boardService.getList(criteria));
+	}
+
+	@Test
+	public void getTotalCount() {
+		log.info("count!");
+		log.info(boardService.getTotalCount());
+		
+		Long total = boardService.getTotalCount();
+		Long endPageNum = (long) Math.ceil(( total * 1.0 ) / 10) ;
+		
+		log.info("endNum === " + endPageNum);
+		
 	}
 	
 }

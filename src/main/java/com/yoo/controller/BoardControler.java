@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yoo.domain.BoardVO;
+import com.yoo.domain.Criteria;
 import com.yoo.service.BoardService;
 
 import lombok.AllArgsConstructor;
@@ -35,7 +36,14 @@ public class BoardControler {
 	@ResponseBody
 	public List<BoardVO> getList(){
 		log.info("getList");
-		return boardService.getList();
+		return boardService.getList(new Criteria());
+	}
+	
+	@PostMapping("/getTotalCount")
+	@ResponseBody
+	public Long getTotalCount(){
+		log.info("getTotalCount");
+		return boardService.getTotalCount();
 	}
 	
 	@GetMapping("/register")

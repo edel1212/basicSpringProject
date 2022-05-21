@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="com.yoo.mapper.BoardMapper">
-  	<select id="getList" resultType="com.yoo.domain.BoardVO">
+  	<select id="getList" parameterType="com.yoo.domain.Criteria"  resultType="com.yoo.domain.BoardVO">
   		SELECT R1.* FROM (
 			SELECT  
 				ROW_NUMBER() OVER()  AS rn 
@@ -15,7 +15,11 @@
 				, regdate
 				, updatedate
 				 FROM tbl_board
-		)R1 LIMIT 30 ,10;
+		)R1 LIMIT #{pageNum} ,#{amount};
+  	</select>
+  	
+  	<select id="getTotalCount" resultType="long">
+			SELECT count(bno) FROM tbl_board
   	</select>
   	
   	<insert id="register" parameterType="com.yoo.domain.BoardVO">
