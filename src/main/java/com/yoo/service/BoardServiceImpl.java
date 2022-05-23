@@ -21,6 +21,7 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<BoardVO> getList(Criteria criteria) {
 		log.info("servieImp - getList...");
+		criteria.setPageNum(criteria.getPageNum()-1L);;
 		return boardMapper.getList(criteria);
 	}
 

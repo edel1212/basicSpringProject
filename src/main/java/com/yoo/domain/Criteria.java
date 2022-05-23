@@ -8,8 +8,7 @@ public class Criteria {
 	private Long amount;
 	
 	public Criteria() {
-		this.pageNum = 0L;
-		this.amount = 10L;
+		this(1L,10L);
 	}
 	
 	public Criteria(Long pageNum, Long amount) {

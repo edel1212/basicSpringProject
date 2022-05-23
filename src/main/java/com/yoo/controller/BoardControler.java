@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yoo.domain.BoardVO;
 import com.yoo.domain.Criteria;
+import com.yoo.domain.PageDTO;
 import com.yoo.service.BoardService;
 
 import lombok.AllArgsConstructor;
@@ -34,9 +35,14 @@ public class BoardControler {
 	
 	@PostMapping("/getList")
 	@ResponseBody
-	public List<BoardVO> getList(){
+	public Map<String, Object> getList(Criteria cri){
 		log.info("getList");
-		return boardService.getList(new Criteria());
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("pageMaker", new PageDTO(cri, boardService.getTotalCount()));
+		result.put("list", boardService.getList(cri));
+		
+		return result;
 	}
 	
 	@PostMapping("/getTotalCount")

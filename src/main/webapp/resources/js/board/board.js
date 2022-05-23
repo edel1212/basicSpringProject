@@ -1,7 +1,7 @@
 "use strict";
 window.onload = () => {
-    let endPageNum = new EndPageNum();
-    endPageNum.drawPageNum(0, endPageNum.getEndPageNum());
+    //let endPageNum = new EndPageNum();
+    // endPageNum.drawPageNum(0, endPageNum.getEndPageNum());
     let list = new List();
 };
 class List {
@@ -13,10 +13,18 @@ class List {
             method: "POST",
             headers: {
                 Accept: "application/json",
+                "Content-Type": "application/json",
             },
+            body: JSON.stringify({
+                pageNum: 1,
+                amount: 10,
+            }),
         })
             .then((response) => response.json())
-            .then((data) => this.drawGrid(data))
+            .then((data) => {
+            console.log("data", data);
+            this.drawGrid(data["list"]);
+        })
             .catch((error) => console.log(error));
         /**
          * btn Event
@@ -82,20 +90,6 @@ class EndPageNum {
     }
     getEndPageNum() {
         return this.endPageNum;
-    }
-    drawPageNum(selectNum, endPageNum) {
-        let pagNumEle = document.querySelector(".pagination");
-        if (pagNumEle instanceof HTMLUListElement) {
-            let liHTML = "";
-            for (let selectNum = 0; selectNum < endPageNum; selectNum++) {
-                // if(){
-                // }
-                liHTML += `<li class="page-item"><a class="page-link" href="#" >
-        ${selectNum + 1}
-        </a></li>`;
-            } //for
-            pagNumEle.innerHTML = liHTML;
-        }
     }
 }
 //# sourceMappingURL=board.js.map
