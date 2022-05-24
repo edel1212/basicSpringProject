@@ -9,9 +9,12 @@ type list = [
   }
 ];
 
+type PageData = {
+  pageNum: number;
+  amount: number;
+};
+
 window.onload = () => {
-  //let endPageNum = new EndPageNum();
-  // endPageNum.drawPageNum(0, endPageNum.getEndPageNum());
   let list = new List();
 };
 
@@ -19,24 +22,7 @@ class List {
   private element = document.querySelector("#board");
   private regBtb = document.querySelector("#regBtn");
   constructor() {
-    fetch("/board/getList", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        pageNum: 1,
-        amount: 10,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("data", data);
-        this.drawGrid(data["list"]);
-      })
-      .catch((error) => console.log(error));
-
+    this.getList({ pageNum: 1, amount: 10 });
     /**
      * btn Event
      */
@@ -53,6 +39,26 @@ class List {
       });
     }
   }
+  getList(pageData: PageData) {
+    fetch("/board/getList", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        pageNum: pageData["pageNum"],
+        amount: pageData["amount"],
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("data", data);
+        this.drawGrid(data["list"]);
+      })
+      .catch((error) => console.log(error));
+  }
+
   /**
    * draw list
    */
