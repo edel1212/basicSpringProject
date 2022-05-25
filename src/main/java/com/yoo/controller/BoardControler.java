@@ -35,7 +35,7 @@ public class BoardControler {
 	
 	@PostMapping("/getList")
 	@ResponseBody
-	public Map<String, Object> getList(Criteria cri){
+	public Map<String, Object> getList(@RequestBody Criteria cri){
 		log.info("getList");
 		
 		Map<String, Object> result = new HashMap<String, Object>();

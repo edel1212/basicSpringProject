@@ -1,12 +1,23 @@
 "use strict";
 window.onload = () => {
-    let list = new List();
+    new List();
 };
 class List {
     constructor() {
         var _a, _b;
         this.element = document.querySelector("#board");
         this.regBtb = document.querySelector("#regBtn");
+        this.pageData = {
+            startPage: 0,
+            endPage: 0,
+            prev: false,
+            next: false,
+            total: 0,
+            cri: {
+                pageNum: 0,
+                amount: 0,
+            },
+        };
         this.getList({ pageNum: 1, amount: 10 });
         /**
          * btn Event
@@ -21,6 +32,32 @@ class List {
         if (this.regBtb instanceof HTMLButtonElement) {
             (_b = this.regBtb) === null || _b === void 0 ? void 0 : _b.addEventListener("click", () => {
                 location.href = "/board/register";
+            });
+        }
+        const pageNav = document.querySelector(".pagination");
+        if (pageNav instanceof HTMLUListElement) {
+            pageNav.addEventListener("click", (e) => {
+                //active Class reset
+                document.querySelectorAll(".page-item").forEach((ele) => {
+                    ele.classList.remove("active");
+                });
+                const pageNavClassList = e.target.parentElement.classList;
+                if (pageNavClassList.contains("prev")) {
+                    this.getList({
+                        pageNum: Number(this.pageData["startPage"]) - 1,
+                        amount: 10,
+                    });
+                }
+                else if (pageNavClassList.contains("page-item")) {
+                    pageNavClassList.add("active");
+                    this.getList({ pageNum: Number(e.target.text), amount: 10 });
+                }
+                else {
+                    this.getList({
+                        pageNum: Number(this.pageData["endPage"]) + 1,
+                        amount: 10,
+                    });
+                }
             });
         }
     }
@@ -40,14 +77,45 @@ class List {
             .then((data) => {
             console.log("data", data);
             this.drawGrid(data["list"]);
+            this.drawPageNavi(data["pageMaker"]);
+            this.pageData = data["pageMaker"];
         })
             .catch((error) => console.log(error));
+    }
+    /**
+     * draw pageNavi
+     */
+    drawPageNavi(data) {
+        let pagNumEle = document.querySelector(".pagination");
+        if (pagNumEle instanceof HTMLUListElement) {
+            let liHTML = "";
+            if (data["prev"]) {
+                liHTML += `<li class="pagiante_button previous">
+                      <a class="page-link" href="#">
+                        Previous
+                      </a>
+                    </li>`;
+            }
+            for (let i = data["startPage"]; i <= data["endPage"]; i++) {
+                liHTML += `<li class="page-item ${i - 1 === data["cri"]["pageNum"] ? "active" : ""}"><a class="page-link" href="#" >${i}</a></li>`;
+            } //for
+            if (data["next"]) {
+                liHTML += `<li class="pagiante_button next">
+                      <a class="page-link" href="#"  >
+                        Next
+                      </a>
+                    </li>`;
+            }
+            pagNumEle.innerHTML = liHTML;
+        }
     }
     /**
      * draw list
      */
     drawGrid(data) {
-        var _a;
+        if (this.element instanceof HTMLElement) {
+            this.element.innerHTML = "";
+        }
         let htmlCode = "";
         for (let i in data) {
             htmlCode += `<tr data-id=${data[i]["bno"]}>`;
@@ -68,29 +136,9 @@ class List {
             htmlCode += "</td>";
             htmlCode += "</tr>";
         } //for
-        (_a = this.element) === null || _a === void 0 ? void 0 : _a.insertAdjacentHTML("afterbegin", htmlCode);
-    }
-}
-/**
- * @description : 마지막 페이지 번호를 가져옴
- */
-class EndPageNum {
-    constructor() {
-        this.endPageNum = 0;
-        fetch("/board/getTotalCount", {
-            method: "POST",
-            headers: {
-                Accept: "application/json",
-            },
-        })
-            .then((reponse) => reponse.json())
-            .then((result) => {
-            this.endPageNum = Math.ceil(result / 10);
-        })
-            .catch((error) => console.log(error));
-    }
-    getEndPageNum() {
-        return this.endPageNum;
+        if (this.element instanceof HTMLElement) {
+            this.element.innerHTML = htmlCode;
+        }
     }
 }
 //# sourceMappingURL=board.js.map
