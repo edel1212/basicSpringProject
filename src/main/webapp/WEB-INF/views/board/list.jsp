@@ -17,7 +17,7 @@
 	                <h6 class="m-0 font-weight-bold text-primary" style="line-height: 38px;">DataTables</h6>
 	                <button id="regBtn" type="button" class="btn btn-xs pull-right">Register</button>
 	            </div>
-	            <div class="card-body">
+	            <div class="card-body" style="min-height: 500px">
 	                <div class="table-responsive">
 	                    <table class="table table-striped table-boredered table-hover" width="100%" cellspacing="0">
 	                        <thead>
@@ -31,7 +31,7 @@
 	                        </thead>
 	                       
 	                        <tbody id="board">
-	                            
+	                            <!-- Board Script -->
 	                        </tbody>
 	                    </table>
 	                </div>
@@ -41,23 +41,7 @@
 			<!-- paging-box -->
 			<div id="pull-righ" style="text-align: right">
 				<ul class="pagination">
-						<!-- <li class="pagiante_button previous">
-						<a class="page-link" href="#">
-							Previous
-						</a>
-						
-						
-						<li class="page-item">
-							<a class="page-link" href="#" >
-								2
-							</a>
-						</li>
-						
-						<li class="pagiante_button next">
-						<a class="page-link" href="#"  >
-							Next
-						</a>
-						</li> -->
+						<!-- pagiNav Script -->
 				</ul>
 			</div>
 			<!-- /paging-box -->

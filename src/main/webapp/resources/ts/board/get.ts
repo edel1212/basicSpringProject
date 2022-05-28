@@ -3,7 +3,7 @@
  */
 
 window.onload = () => {
-  let board = new Board();
+  new Board();
 };
 
 class Board {

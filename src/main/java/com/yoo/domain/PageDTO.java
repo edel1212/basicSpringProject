@@ -17,6 +17,7 @@ public class PageDTO {
 		this.cri = cri;
 		this.total = total;
 		
+		
 		this.endPage = (long) (Math.ceil(cri.getPageNum() / 10.0)) * 10;
 		this.startPage = this.endPage - 9;
 		Long realEnd = (long)Math.ceil(total * 1.0) / cri.getAmount() ;

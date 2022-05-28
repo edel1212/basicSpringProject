@@ -5,17 +5,18 @@
   
   <mapper namespace="com.yoo.mapper.BoardMapper">
   	<select id="getList" parameterType="com.yoo.domain.Criteria"  resultType="com.yoo.domain.BoardVO">
-  		SELECT R1.* FROM (
-			SELECT  
-				ROW_NUMBER() OVER()  AS rn 
-				, bno 
-				, title
-				, content
-				, writer
-				, regdate
-				, updatedate
-				 FROM tbl_board
-		)R1 LIMIT #{pageNum} ,#{amount};
+  		
+		SELECT  
+			ROW_NUMBER() OVER()  AS rn 
+			, bno 
+			, title
+			, content
+			, writer
+			, regdate
+			, updatedate
+		 FROM tbl_board
+		 WHERE( title LIKE '%테%' ) LIMIT #{pageNum} ,#{amount}		
+	
   	</select>
   	
   	<select id="getTotalCount" resultType="long">

@@ -18,22 +18,32 @@ class List {
                 amount: 0,
             },
         };
-        this.getList({ pageNum: 1, amount: 10 });
+        let localPageNum = localStorage.getItem("localPageNum");
+        this.getList({
+            pageNum: localPageNum ? Number(localPageNum) : 1,
+            amount: 10,
+        });
         /**
          * btn Event
          */
+        /** -- boardClick -- */
+        //목록 클릭
         if (this.element instanceof HTMLElement) {
             (_a = this.element) === null || _a === void 0 ? void 0 : _a.addEventListener("click", (e) => {
+                var _a, _b;
                 let bno = e.target.parentElement.getAttribute("data-id");
                 localStorage.setItem("bno", bno);
+                localStorage.setItem("localPageNum", (_b = (_a = document.querySelector(".pagination .active")) === null || _a === void 0 ? void 0 : _a.textContent) !== null && _b !== void 0 ? _b : "1");
                 location.href = "/board/get";
             });
         }
+        //등록 클릭
         if (this.regBtb instanceof HTMLButtonElement) {
             (_b = this.regBtb) === null || _b === void 0 ? void 0 : _b.addEventListener("click", () => {
                 location.href = "/board/register";
             });
         }
+        /** -- NaviClick -- */
         const pageNav = document.querySelector(".pagination");
         if (pageNav instanceof HTMLUListElement) {
             pageNav.addEventListener("click", (e) => {
@@ -41,26 +51,38 @@ class List {
                 document.querySelectorAll(".page-item").forEach((ele) => {
                     ele.classList.remove("active");
                 });
-                const pageNavClassList = e.target.parentElement.classList;
-                if (pageNavClassList.contains("prev")) {
+                const targetParent = e.target.parentElement;
+                const pageNavClassList = targetParent.classList;
+                if (pageNavClassList.contains("previous")) {
+                    localStorage.setItem("localPageNum", String(Number(this.pageData["startPage"]) - 1));
                     this.getList({
                         pageNum: Number(this.pageData["startPage"]) - 1,
                         amount: 10,
                     });
                 }
                 else if (pageNavClassList.contains("page-item")) {
-                    pageNavClassList.add("active");
+                    targetParent.classList.add("active");
+                    localStorage.setItem("localPageNum", targetParent.textContent);
                     this.getList({ pageNum: Number(e.target.text), amount: 10 });
                 }
-                else {
+                else if (pageNavClassList.contains("next")) {
+                    localStorage.setItem("localPageNum", String(Number(this.pageData["endPage"]) + 1));
                     this.getList({
                         pageNum: Number(this.pageData["endPage"]) + 1,
+                        amount: 10,
+                    });
+                }
+                else {
+                    localStorage.setItem("localPageNum", "1");
+                    this.getList({
+                        pageNum: 1,
                         amount: 10,
                     });
                 }
             });
         }
     }
+    /** -- list func -- */
     getList(pageData) {
         fetch("/board/getList", {
             method: "POST",
@@ -75,7 +97,6 @@ class List {
         })
             .then((response) => response.json())
             .then((data) => {
-            console.log("data", data);
             this.drawGrid(data["list"]);
             this.drawPageNavi(data["pageMaker"]);
             this.pageData = data["pageMaker"];
@@ -97,7 +118,7 @@ class List {
                     </li>`;
             }
             for (let i = data["startPage"]; i <= data["endPage"]; i++) {
-                liHTML += `<li class="page-item ${i - 1 === data["cri"]["pageNum"] ? "active" : ""}"><a class="page-link" href="#" >${i}</a></li>`;
+                liHTML += `<li class="page-item ${i - 1 === data["cri"]["pageNum"] / 10 ? "active" : ""}"><a class="page-link" href="#" >${i}</a></li>`;
             } //for
             if (data["next"]) {
                 liHTML += `<li class="pagiante_button next">

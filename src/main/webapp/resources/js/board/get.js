@@ -3,7 +3,7 @@
  * @Todo : history state 적용이 필요해보임!
  */
 window.onload = () => {
-    let board = new Board();
+    new Board();
 };
 class Board {
     constructor() {
