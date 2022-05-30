@@ -38,13 +38,36 @@
 	            </div>
 	        </div>
 			
-			<!-- paging-box -->
-			<div id="pull-righ" style="text-align: right">
+			
+			<!-- paging and search Box -->
+			<div id="pull-righ" style="display: flex;justify-content: space-between;" >
+				<!-- paging -->
 				<ul class="pagination">
 						<!-- pagiNav Script -->
 				</ul>
+				 <!-- 검색처리 -->
+				<div class="row">
+					<div id="searchBox" class="col-lg-12">
+						<select class="form-control"  name="type" style="display:inline-block;width:auto">
+							<option value="A" >
+								--
+							</option>
+							<option value="T" >
+								제목
+							</option>
+							<option value="C" >
+								내용
+							</option>
+							<option value="W" >
+								작성자
+							</option>
+						</select>
+						<input type="text" class="form-control"  name="keyword" style="display:inline-block;width:auto" />
+						<button class="btn btn=default">Search</button>
+					</div>
+				</div>
 			</div>
-			<!-- /paging-box -->
+			
 			
 	    </div>
 	    <!-- /.container-fluid -->
