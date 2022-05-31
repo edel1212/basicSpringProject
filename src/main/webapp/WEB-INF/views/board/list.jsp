@@ -63,7 +63,7 @@
 							</option>
 						</select>
 						<input type="text" class="form-control"  name="keyword" style="display:inline-block;width:auto" />
-						<button class="btn btn=default">Search</button>
+						<button id="searchBtn" class="btn btn=default">Search</button>
 					</div>
 				</div>
 			</div>

@@ -7,6 +7,7 @@ class List {
         var _a, _b;
         this.element = document.querySelector("#board");
         this.regBtb = document.querySelector("#regBtn");
+        this.searchBtn = document.querySelector("#searchBtn");
         this.pageData = {
             startPage: 0,
             endPage: 0,
@@ -26,6 +27,28 @@ class List {
         /**
          * btn Event
          */
+        //검색 버튼
+        if (this.searchBtn instanceof HTMLButtonElement) {
+            this.searchBtn.addEventListener("click", () => {
+                debugger;
+                const searchType = document.querySelector("#searchBox select[name='type']");
+                const searchInput = document.querySelector("#searchBox input[name='keyword']");
+                let searchTypeVal = "A";
+                if (searchType instanceof HTMLInputElement) {
+                    searchTypeVal = searchType.value;
+                }
+                let searchVal = "";
+                if (searchInput instanceof HTMLInputElement) {
+                    searchVal = searchInput.value;
+                }
+                this.getList({
+                    pageNum: localPageNum ? Number(localPageNum) : 1,
+                    amount: 10,
+                    type: searchTypeVal,
+                    keyword: searchVal,
+                });
+            });
+        }
         /** -- boardClick -- */
         //목록 클릭
         if (this.element instanceof HTMLElement) {

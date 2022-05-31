@@ -12,6 +12,8 @@ type BoardList = [
 type PageNum = {
   pageNum: number;
   amount: number;
+  type?: String;
+  keyword?: String;
 };
 
 type PageData = {
@@ -33,6 +35,7 @@ window.onload = () => {
 class List {
   private element = document.querySelector("#board");
   private regBtb = document.querySelector("#regBtn");
+  private searchBtn = document.querySelector("#searchBtn");
   private pageData: PageData = {
     startPage: 0,
     endPage: 0,
@@ -53,6 +56,34 @@ class List {
     /**
      * btn Event
      */
+    //검색 버튼
+    if (this.searchBtn instanceof HTMLButtonElement) {
+      this.searchBtn.addEventListener("click", () => {
+        debugger;
+        const searchType = document.querySelector(
+          "#searchBox select[name='type']"
+        );
+        const searchInput = document.querySelector(
+          "#searchBox input[name='keyword']"
+        );
+
+        let searchTypeVal = "A";
+        if (searchType instanceof HTMLInputElement) {
+          searchTypeVal = searchType.value;
+        }
+        let searchVal = "";
+        if (searchInput instanceof HTMLInputElement) {
+          searchVal = searchInput.value;
+        }
+
+        this.getList({
+          pageNum: localPageNum ? Number(localPageNum) : 1,
+          amount: 10,
+          type: searchTypeVal,
+          keyword: searchVal,
+        });
+      });
+    }
     /** -- boardClick -- */
     //목록 클릭
     if (this.element instanceof HTMLElement) {
