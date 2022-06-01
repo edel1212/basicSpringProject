@@ -39,6 +39,40 @@
     </div>
   </div>
   
+  <!-- Reply_box -->
+	<div class='row card-body'>
+		<div class='col-lg-12'>
+			<div class='panel panel-default'>
+				<div class='panel-heading'>
+					<i class='fa fa-comments fa-fw'></i>
+					Relpy						
+				</div>
+				<!-- /panel-heading  -->
+				
+				<div class='panel-body'>
+					<ul class='chat'>
+						<li class="left clear-fix" data-rnp='12'>
+							<div>
+								<div class='header'>
+									<strong class='primery-font'>회원만 댓글을 남길 수 있습니다.</strong>
+									<small class='pull-right text-muted'>20XX-XX-XX XX:XX</small>
+								</div>
+								<!-- /header -->
+								<p>댓글이 업습니다! 댓글을 남겨주세요.</p>
+							</div>
+						</li>
+						<!-- clear-fix -->
+					</ul>
+					<!-- /chat -->
+				</div>
+				<!-- /panel-body -->
+			</div>
+			<!-- /panel panel-default -->
+		</div>
+		<!-- /col-lg-12 -->
+	</div>
+	<!-- /row -->   
+  
 </div>
 <script src="/resources/js/board/get.js"></script>
 <%@include file="../includes/footer.jsp" %>

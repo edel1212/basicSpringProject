@@ -38,17 +38,10 @@ public class BoardControler {
 		log.info("getList");
 		
 		Map<String, Object> result = new HashMap<String, Object>();
-		result.put("pageMaker", new PageDTO(cri, boardService.getTotalCount()));
+		result.put("pageMaker", new PageDTO(cri, boardService.getTotalCount(cri)));
 		result.put("list", boardService.getList(cri));
 		
 		return result;
-	}
-	
-	@PostMapping("/getTotalCount")
-	@ResponseBody
-	public Long getTotalCount(){
-		log.info("getTotalCount");
-		return boardService.getTotalCount();
 	}
 	
 	@GetMapping("/register")

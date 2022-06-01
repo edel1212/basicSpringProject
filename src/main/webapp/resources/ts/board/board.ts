@@ -33,9 +33,15 @@ window.onload = () => {
 };
 
 class List {
+  //목록
   private element = document.querySelector("#board");
+  //등록
   private regBtb = document.querySelector("#regBtn");
+  //검색
   private searchBtn = document.querySelector("#searchBtn");
+  private searchTypeVal = "A";
+  private searchVal = "";
+  //페이징 데이터 초기화
   private pageData: PageData = {
     startPage: 0,
     endPage: 0,
@@ -48,18 +54,22 @@ class List {
     },
   };
   constructor() {
-    let localPageNum = localStorage.getItem("localPageNum");
+    let localPageNum = 1;
+    if (localStorage.getItem("getBoard")) {
+      localPageNum = Number(localStorage.getItem("localPageNum")) ?? 1;
+      localStorage.removeItem("getBoard");
+    }
     this.getList({
-      pageNum: localPageNum ? Number(localPageNum) : 1,
+      pageNum: localPageNum,
       amount: 10,
     });
+    localStorage.removeItem("localPageNum");
     /**
      * btn Event
      */
     //검색 버튼
     if (this.searchBtn instanceof HTMLButtonElement) {
       this.searchBtn.addEventListener("click", () => {
-        debugger;
         const searchType = document.querySelector(
           "#searchBox select[name='type']"
         );
@@ -67,20 +77,19 @@ class List {
           "#searchBox input[name='keyword']"
         );
 
-        let searchTypeVal = "A";
         if (searchType instanceof HTMLInputElement) {
-          searchTypeVal = searchType.value;
+          this.searchTypeVal = searchType.value;
         }
-        let searchVal = "";
+
         if (searchInput instanceof HTMLInputElement) {
-          searchVal = searchInput.value;
+          this.searchVal = searchInput.value;
         }
 
         this.getList({
-          pageNum: localPageNum ? Number(localPageNum) : 1,
+          pageNum: 1,
           amount: 10,
-          type: searchTypeVal,
-          keyword: searchVal,
+          type: this.searchTypeVal,
+          keyword: this.searchVal,
         });
       });
     }
@@ -114,37 +123,31 @@ class List {
         });
         const targetParent = e.target.parentElement;
         const pageNavClassList = targetParent.classList;
+        let pagingObj = {
+          pageNum: 1,
+          amount: 10,
+          type: this.searchTypeVal,
+          keyword: this.searchVal,
+        };
+        let localPageNum = "1";
         if (pageNavClassList.contains("previous")) {
-          localStorage.setItem(
-            "localPageNum",
-            String(Number(this.pageData["startPage"]) - 1)
-          );
-          this.getList({
-            pageNum: Number(this.pageData["startPage"]) - 1,
-            amount: 10,
-          });
+          //이전
+          localPageNum = String(Number(this.pageData["startPage"]) - 1);
+          pagingObj.pageNum = Number(this.pageData["startPage"]) - 1;
         } else if (pageNavClassList.contains("page-item")) {
+          //페이지 번호
           targetParent.classList.add("active");
-          localStorage.setItem("localPageNum", targetParent.textContent);
-          this.getList({ pageNum: Number(e.target.text), amount: 10 });
+          localPageNum = targetParent.textContent;
+          pagingObj.pageNum = Number(e.target.text);
         } else if (pageNavClassList.contains("next")) {
-          localStorage.setItem(
-            "localPageNum",
-            String(Number(this.pageData["endPage"]) + 1)
-          );
-          this.getList({
-            pageNum: Number(this.pageData["endPage"]) + 1,
-            amount: 10,
-          });
-        } else {
-          localStorage.setItem("localPageNum", "1");
-          this.getList({
-            pageNum: 1,
-            amount: 10,
-          });
+          //다음
+          localPageNum = String(Number(this.pageData["endPage"]) + 1);
+          pagingObj.pageNum = Number(this.pageData["endPage"]) + 1;
         }
-      });
-    }
+        this.getList(pagingObj);
+        localStorage.setItem("localPageNum", localPageNum);
+      }); //pageNav-click Event
+    } //pageNav
   }
   /** -- list func -- */
   getList(pageData: PageNum) {
@@ -157,6 +160,8 @@ class List {
       body: JSON.stringify({
         pageNum: pageData["pageNum"],
         amount: pageData["amount"],
+        type: pageData["type"] ?? "",
+        keyword: pageData["keyword"] ?? "",
       }),
     })
       .then((response) => response.json())

@@ -15,13 +15,35 @@
 			, regdate
 			, updatedate
 		 FROM tbl_board
-		 WHERE( title LIKE '%테%' ) LIMIT #{pageNum} ,#{amount}		
-	
+		 <include refid="criteria"></include>
+		 LIMIT #{pageNum} ,#{amount}	
   	</select>
   	
-  	<select id="getTotalCount" resultType="long">
-			SELECT count(bno) FROM tbl_board
+  	<select id="getTotalCount" parameterType="com.yoo.domain.Criteria"  resultType="long">
+		SELECT COUNT(bno) FROM tbl_board
+		<include refid="criteria"></include>
   	</select>
+  	
+  	<sql id="criteria">
+  		<where>
+  			<if test=" keyword != null and keyword != '' ">
+				<if test=' type == "A".toString() '>
+				 	title LIKE CONCAT('%', #{keyword}, '%') OR
+				 	content LIKE CONCAT('%', #{keyword}, '%') OR
+				 	writer LIKE CONCAT('%', #{keyword}, '%')
+				 </if>
+		  		<if test=' type == "T".toString() '>
+				 	title LIKE CONCAT('%', #{keyword}, '%')
+				 </if>
+				 <if test=' type == "C".toString() '>
+				 	content LIKE CONCAT('%', #{keyword}, '%')
+				 </if>
+				 <if test=' type == "W".toString() '>
+				 	writer LIKE CONCAT('%', #{keyword}, '%')
+				 </if>
+			 </if>  		
+  		</where>
+  	</sql>
   	
   	<insert id="register" parameterType="com.yoo.domain.BoardVO">
   		INSERT INTO tbl_board (

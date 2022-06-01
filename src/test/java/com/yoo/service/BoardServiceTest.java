@@ -35,6 +35,11 @@ public class BoardServiceTest {
 	@Test
 	public void getListTest() {
 		Criteria criteria = new Criteria();
+		criteria.setAmount(10L);
+		criteria.setPageNum(1L);
+		criteria.setKeyword("a");
+		criteria.setType("A");
+		
 		log.info(criteria);
 		log.info(boardService.getList(criteria));
 	}
@@ -42,12 +47,12 @@ public class BoardServiceTest {
 	@Test
 	public void getTotalCount() {
 		log.info("count!");
-		log.info(boardService.getTotalCount());
+		//log.info(boardService.getTotalCount());
 		
-		Long total = boardService.getTotalCount();
-		Long endPageNum = (long) Math.ceil(( total * 1.0 ) / 10) ;
+		//Long total = boardService.getTotalCount();
+		//Long endPageNum = (long) Math.ceil(( total * 1.0 ) / 10) ;
 		
-		log.info("endNum === " + endPageNum);
+		//log.info("endNum === " + endPageNum);
 		
 	}
 	

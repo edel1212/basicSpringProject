@@ -4,6 +4,7 @@
 
 window.onload = () => {
   new Board();
+  localStorage.setItem("getBoard", "true");
 };
 
 class Board {

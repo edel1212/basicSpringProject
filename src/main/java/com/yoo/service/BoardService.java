@@ -9,7 +9,7 @@ public interface BoardService {
 	//목록
 	public List<BoardVO> getList(Criteria criteria);
 	//총 board 개수
-	public Long getTotalCount();
+	public Long getTotalCount(Criteria criteria);
 	//등록
 	public int register(BoardVO vo);
 	//선택된 내용

@@ -38,7 +38,6 @@
 	            </div>
 	        </div>
 			
-			
 			<!-- paging and search Box -->
 			<div id="pull-righ" style="display: flex;justify-content: space-between;" >
 				<!-- paging -->
@@ -67,7 +66,6 @@
 					</div>
 				</div>
 			</div>
-			
 			
 	    </div>
 	    <!-- /.container-fluid -->

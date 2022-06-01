@@ -4,10 +4,16 @@ window.onload = () => {
 };
 class List {
     constructor() {
-        var _a, _b;
+        var _a, _b, _c;
+        //목록
         this.element = document.querySelector("#board");
+        //등록
         this.regBtb = document.querySelector("#regBtn");
+        //검색
         this.searchBtn = document.querySelector("#searchBtn");
+        this.searchTypeVal = "A";
+        this.searchVal = "";
+        //페이징 데이터 초기화
         this.pageData = {
             startPage: 0,
             endPage: 0,
@@ -19,40 +25,42 @@ class List {
                 amount: 0,
             },
         };
-        let localPageNum = localStorage.getItem("localPageNum");
+        let localPageNum = 1;
+        if (localStorage.getItem("getBoard")) {
+            localPageNum = (_a = Number(localStorage.getItem("localPageNum"))) !== null && _a !== void 0 ? _a : 1;
+            localStorage.removeItem("getBoard");
+        }
         this.getList({
-            pageNum: localPageNum ? Number(localPageNum) : 1,
+            pageNum: localPageNum,
             amount: 10,
         });
+        localStorage.removeItem("localPageNum");
         /**
          * btn Event
          */
         //검색 버튼
         if (this.searchBtn instanceof HTMLButtonElement) {
             this.searchBtn.addEventListener("click", () => {
-                debugger;
                 const searchType = document.querySelector("#searchBox select[name='type']");
                 const searchInput = document.querySelector("#searchBox input[name='keyword']");
-                let searchTypeVal = "A";
                 if (searchType instanceof HTMLInputElement) {
-                    searchTypeVal = searchType.value;
+                    this.searchTypeVal = searchType.value;
                 }
-                let searchVal = "";
                 if (searchInput instanceof HTMLInputElement) {
-                    searchVal = searchInput.value;
+                    this.searchVal = searchInput.value;
                 }
                 this.getList({
-                    pageNum: localPageNum ? Number(localPageNum) : 1,
+                    pageNum: 1,
                     amount: 10,
-                    type: searchTypeVal,
-                    keyword: searchVal,
+                    type: this.searchTypeVal,
+                    keyword: this.searchVal,
                 });
             });
         }
         /** -- boardClick -- */
         //목록 클릭
         if (this.element instanceof HTMLElement) {
-            (_a = this.element) === null || _a === void 0 ? void 0 : _a.addEventListener("click", (e) => {
+            (_b = this.element) === null || _b === void 0 ? void 0 : _b.addEventListener("click", (e) => {
                 var _a, _b;
                 let bno = e.target.parentElement.getAttribute("data-id");
                 localStorage.setItem("bno", bno);
@@ -62,7 +70,7 @@ class List {
         }
         //등록 클릭
         if (this.regBtb instanceof HTMLButtonElement) {
-            (_b = this.regBtb) === null || _b === void 0 ? void 0 : _b.addEventListener("click", () => {
+            (_c = this.regBtb) === null || _c === void 0 ? void 0 : _c.addEventListener("click", () => {
                 location.href = "/board/register";
             });
         }
@@ -76,37 +84,37 @@ class List {
                 });
                 const targetParent = e.target.parentElement;
                 const pageNavClassList = targetParent.classList;
+                let pagingObj = {
+                    pageNum: 1,
+                    amount: 10,
+                    type: this.searchTypeVal,
+                    keyword: this.searchVal,
+                };
+                let localPageNum = "1";
                 if (pageNavClassList.contains("previous")) {
-                    localStorage.setItem("localPageNum", String(Number(this.pageData["startPage"]) - 1));
-                    this.getList({
-                        pageNum: Number(this.pageData["startPage"]) - 1,
-                        amount: 10,
-                    });
+                    //이전
+                    localPageNum = String(Number(this.pageData["startPage"]) - 1);
+                    pagingObj.pageNum = Number(this.pageData["startPage"]) - 1;
                 }
                 else if (pageNavClassList.contains("page-item")) {
+                    //페이지 번호
                     targetParent.classList.add("active");
-                    localStorage.setItem("localPageNum", targetParent.textContent);
-                    this.getList({ pageNum: Number(e.target.text), amount: 10 });
+                    localPageNum = targetParent.textContent;
+                    pagingObj.pageNum = Number(e.target.text);
                 }
                 else if (pageNavClassList.contains("next")) {
-                    localStorage.setItem("localPageNum", String(Number(this.pageData["endPage"]) + 1));
-                    this.getList({
-                        pageNum: Number(this.pageData["endPage"]) + 1,
-                        amount: 10,
-                    });
+                    //다음
+                    localPageNum = String(Number(this.pageData["endPage"]) + 1);
+                    pagingObj.pageNum = Number(this.pageData["endPage"]) + 1;
                 }
-                else {
-                    localStorage.setItem("localPageNum", "1");
-                    this.getList({
-                        pageNum: 1,
-                        amount: 10,
-                    });
-                }
-            });
-        }
+                this.getList(pagingObj);
+                localStorage.setItem("localPageNum", localPageNum);
+            }); //pageNav-click Event
+        } //pageNav
     }
     /** -- list func -- */
     getList(pageData) {
+        var _a, _b;
         fetch("/board/getList", {
             method: "POST",
             headers: {
@@ -116,6 +124,8 @@ class List {
             body: JSON.stringify({
                 pageNum: pageData["pageNum"],
                 amount: pageData["amount"],
+                type: (_a = pageData["type"]) !== null && _a !== void 0 ? _a : "",
+                keyword: (_b = pageData["keyword"]) !== null && _b !== void 0 ? _b : "",
             }),
         })
             .then((response) => response.json())
