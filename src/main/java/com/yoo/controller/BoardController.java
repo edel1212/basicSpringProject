@@ -22,7 +22,7 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @RequestMapping("/board/*")
 @AllArgsConstructor
-public class BoardControler {
+public class BoardController {
 
 	private BoardService boardService;
 	
