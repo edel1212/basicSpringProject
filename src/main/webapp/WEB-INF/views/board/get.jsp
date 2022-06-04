@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="../includes/header.jsp" %>
+<style>	
+	.chat {list-style: none;padding: 5px;background: white;border-radius: 10px;}
+	.chat li{margin: 10px;border-bottom: 1px dotted gray;}
+	.chat p{overflow: hidden;word-wrap:break-word;}
+	.chat .header{display: flex;justify-content: space-between;}
+</style>
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
@@ -42,23 +48,23 @@
   <!-- Reply_box -->
 	<div class='row card-body'>
 		<div class='col-lg-12'>
+			<!-- Reply List -->
 			<div class='panel panel-default'>
 				<div class='panel-heading'>
 					<i class='fa fa-comments fa-fw'></i>
-					Relpy						
+					Relpy List						
 				</div>
 				<!-- /panel-heading  -->
-				
 				<div class='panel-body'>
 					<ul class='chat'>
-						<li class="left clear-fix" data-rnp='12'>
+						<li class="left clear-fix" data-rno='0'>
 							<div>
-								<div class='header'>
-									<strong class='primery-font'>회원만 댓글을 남길 수 있습니다.</strong>
+								<div class='header' >
+									<strong class='primery-font'>Only write comment user.</strong>
 									<small class='pull-right text-muted'>20XX-XX-XX XX:XX</small>
 								</div>
 								<!-- /header -->
-								<p>댓글이 업습니다! 댓글을 남겨주세요.</p>
+								<p>Please add comment.</p>
 							</div>
 						</li>
 						<!-- clear-fix -->
@@ -66,6 +72,21 @@
 					<!-- /chat -->
 				</div>
 				<!-- /panel-body -->
+				
+				<!-- add Reply -->
+				<div class='panel panel-default'>
+					<div class='panel-heading' style="display: flex;justify-content: space-between;">
+						<div style="line-height: 38px;">
+							<i class='fa fa-pen fa-fw'></i>
+							Relpy Write						
+						</div>
+						<button id="addReply" type="button" class="btn btn-default">Add Reply</button>
+					</div>
+				</div>
+				<!-- /panel-heading  -->
+				<div class='panel-body'>
+					<textarea id="replyText" rows="" cols="" style="width:100%;margin-top:5px; border:none;resize:none;height:100px"></textarea>
+				</div>
 			</div>
 			<!-- /panel panel-default -->
 		</div>

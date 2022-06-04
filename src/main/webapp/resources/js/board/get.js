@@ -1,13 +1,14 @@
 "use strict";
-/**
- * @Todo : history state 적용이 필요해보임!
- */
 window.onload = () => {
+    if (!localStorage.getItem("bno"))
+        location.href = "404Page";
     new Board();
+    new Reply();
     localStorage.setItem("getBoard", "true");
 };
 class Board {
     constructor() {
+        this.bno = localStorage.getItem("bno");
         this.title = document.querySelector("input[name=title]");
         this.content = document.querySelector("textarea[name=content]");
         this.writer = document.querySelector("input[name=writer]");
@@ -18,12 +19,6 @@ class Board {
         /**
          * get board
          */
-        if (localStorage.getItem("bno")) {
-            this.bno = localStorage.getItem("bno");
-        }
-        else {
-            location.href = "404Page";
-        }
         fetch("/board/get", {
             method: "POST",
             headers: {
@@ -122,6 +117,86 @@ class Board {
                 location.href = "/board/list";
             });
         }
+    }
+}
+class Reply {
+    constructor() {
+        this.bno = localStorage.getItem("bno");
+        this.replyData = {
+            bno: String(this.bno),
+            reply: "TODO regiser User",
+            replyer: "TODO regiser User",
+        };
+        this.drawReply();
+        /** btn Event */
+        //add Reply
+        const addReplyBtn = document.querySelector("#addReply");
+        if (addReplyBtn instanceof HTMLButtonElement) {
+            addReplyBtn.addEventListener("click", () => {
+                const replyText = document.querySelector("#replyText");
+                if (replyText instanceof HTMLTextAreaElement) {
+                    const text = replyText.value;
+                    if (replyText.value === "") {
+                        alert("공백입니다.");
+                        return;
+                    }
+                    this.replyData["reply"] = text;
+                }
+                fetch("/reply/registerReply", {
+                    method: "POST",
+                    headers: {
+                        Accept: "application/json",
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(this.replyData),
+                })
+                    .then((response) => response.json())
+                    .then((result) => {
+                    if (result === 1) {
+                        alert("등록에 성공하였습니다.");
+                    }
+                    else {
+                        alert("등록에 실패하였습니다");
+                    }
+                    this.drawReply();
+                })
+                    .catch((error) => console.error(error));
+            });
+        }
+    }
+    /**draw Reply List */
+    drawReply() {
+        fetch("/reply/getReply", {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(this.replyData),
+        })
+            .then((response) => response.json())
+            .then((result) => {
+            if (!result.result.length)
+                return;
+            const ul = document.querySelector(".chat");
+            if (ul instanceof HTMLUListElement) {
+                ul.innerHTML = "";
+                let HTMLLiElem = "";
+                for (let i of result.result) {
+                    HTMLLiElem += "<li class='left clear-fix' data-rno='0'>";
+                    HTMLLiElem += "<div>";
+                    HTMLLiElem += "<div class='header'>";
+                    HTMLLiElem += `<strong class='primery-font'>${i["replyer"]}</strong>`;
+                    HTMLLiElem += `<small class='pull-right text-muted'>${i["updateDate"]}</small>`;
+                    HTMLLiElem += "</div>";
+                    HTMLLiElem += `<p>${i["reply"]}</p>`;
+                    HTMLLiElem += "</div>";
+                    HTMLLiElem += "</li>";
+                }
+                ul.innerHTML = HTMLLiElem;
+            }
+        })
+            .catch((error) => console.log(error));
     }
 }
 /**

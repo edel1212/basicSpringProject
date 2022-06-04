@@ -23,7 +23,10 @@
 
     <!-- Custom styles for this page -->
     <link href="/resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
+	<style>
+		.btn {border : 1px solid #8080803d; transition : all 1s}
+		.btn:hover { opacity : .5}
+	</style>
 </head>
 <body id="page-top">
 
