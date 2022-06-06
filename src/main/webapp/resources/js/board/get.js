@@ -136,7 +136,7 @@ class Reply {
                 const replyText = document.querySelector("#replyText");
                 if (replyText instanceof HTMLTextAreaElement) {
                     const text = replyText.value;
-                    if (replyText.value === "") {
+                    if (replyText.value.trim() === "") {
                         alert("공백입니다.");
                         return;
                     }
@@ -154,9 +154,76 @@ class Reply {
                     .then((result) => {
                     if (result === 1) {
                         alert("등록에 성공하였습니다.");
+                        if (replyText instanceof HTMLTextAreaElement) {
+                            replyText.value = "";
+                        }
                     }
                     else {
                         alert("등록에 실패하였습니다");
+                    }
+                    this.drawReply();
+                })
+                    .catch((error) => console.error(error));
+            });
+        }
+        //Modify Or Delete
+        const replyWrap = document.querySelector(".chat");
+        if (replyWrap instanceof HTMLUListElement) {
+            replyWrap.addEventListener("click", (e) => {
+                var _a, _b, _c, _d, _e, _f;
+                const target = e.target;
+                if (target.type !== "button")
+                    return;
+                const rno = (_b = (_a = target.parentElement) === null || _a === void 0 ? void 0 : _a.dataset.rno) !== null && _b !== void 0 ? _b : "0";
+                this.replyData.rno = rno;
+                const classArr = target.classList;
+                let url = "";
+                let message = "";
+                if (classArr.contains("replyModify")) {
+                    let beforeRe = (_d = (_c = target.parentElement) === null || _c === void 0 ? void 0 : _c.parentElement) === null || _d === void 0 ? void 0 : _d.querySelector("p");
+                    let replyTxt = "";
+                    //modify Mod Check
+                    if (!target.classList.contains("changeMod")) {
+                        target.classList.add("changeMod");
+                        debugger;
+                        const promp = prompt("변경할 내용일 입력해주세요.", (_e = beforeRe === null || beforeRe === void 0 ? void 0 : beforeRe.textContent) !== null && _e !== void 0 ? _e : "");
+                        if (beforeRe instanceof HTMLElement) {
+                            beforeRe.innerText = promp !== null && promp !== void 0 ? promp : "";
+                        }
+                        target.textContent = "Change";
+                        return;
+                    }
+                    url = "modifyReply";
+                    message = "수정";
+                    //this.replyData.replyer = "TODO Make Login Service";
+                    this.replyData.reply =
+                        (_f = beforeRe === null || beforeRe === void 0 ? void 0 : beforeRe.textContent) !== null && _f !== void 0 ? _f : "수정에 문제가 발생하였습니다.";
+                    target.classList.remove("changeMod");
+                }
+                else if (classArr.contains("replyDelete")) {
+                    //delete
+                    url = "deleteReply";
+                    message = "삭제";
+                }
+                else {
+                    alert("Error");
+                    return;
+                }
+                fetch(`/reply/${url}`, {
+                    method: "POST",
+                    headers: {
+                        Accept: "application/json",
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(this.replyData),
+                })
+                    .then((response) => response.json())
+                    .then((result) => {
+                    if (result === 1) {
+                        alert(`${message}에 성공하였습니다.`);
+                    }
+                    else {
+                        alert(`${message}에 실패하였습니다`);
                     }
                     this.drawReply();
                 })
@@ -183,13 +250,19 @@ class Reply {
                 ul.innerHTML = "";
                 let HTMLLiElem = "";
                 for (let i of result.result) {
-                    HTMLLiElem += "<li class='left clear-fix' data-rno='0'>";
+                    HTMLLiElem += `<li class='left clear-fix'>`;
                     HTMLLiElem += "<div>";
                     HTMLLiElem += "<div class='header'>";
                     HTMLLiElem += `<strong class='primery-font'>${i["replyer"]}</strong>`;
                     HTMLLiElem += `<small class='pull-right text-muted'>${i["updateDate"]}</small>`;
                     HTMLLiElem += "</div>";
+                    HTMLLiElem += `<div class="replyBody">`;
                     HTMLLiElem += `<p>${i["reply"]}</p>`;
+                    HTMLLiElem += `<div class="btnWrap" data-rno='${i["rno"]}'>`;
+                    HTMLLiElem += `<button type="button" class="btn btn-default replyModify">Modify</button>`;
+                    HTMLLiElem += `<button type="button" class="btn btn-default replyDelete">Delete</button>`;
+                    HTMLLiElem += `</div>`;
+                    HTMLLiElem += "</div>";
                     HTMLLiElem += "</div>";
                     HTMLLiElem += "</li>";
                 }

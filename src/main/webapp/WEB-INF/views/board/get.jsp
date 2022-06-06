@@ -4,6 +4,11 @@
 <style>	
 	.chat {list-style: none;padding: 5px;background: white;border-radius: 10px;}
 	.chat li{margin: 10px;border-bottom: 1px dotted gray;}
+	.chat .replyBody {
+   	 					margin-bottom: 16px;
+    					display: flex;
+    					justify-content: space-between;
+					}
 	.chat p{overflow: hidden;word-wrap:break-word;}
 	.chat .header{display: flex;justify-content: space-between;}
 </style>
@@ -34,12 +39,11 @@
               <label>Writer</label>
               <input class="form-control" name="writer" readonly="readonly" />
             </div>
-            <button id="modify" type="button" class="btn btn-default">Modify</button>
-            <button id="delete" type="button" class="btn btn-default">Delete</button>
-            <button id="list" type="button" class="btn btn-default">
-              List
-            </button>
-          
+             <div class="form-group">
+	            <button id="modify" type="button" class="btn btn-default">Modify</button>
+	            <button id="delete" type="button" class="btn btn-default">Delete</button>
+	            <button id="list" type="button" class="btn btn-default">List</button>
+             </div>
         </div>
       </div>
     </div>
@@ -60,7 +64,7 @@
 						<li class="left clear-fix" data-rno='0'>
 							<div>
 								<div class='header' >
-									<strong class='primery-font'>Only write comment user.</strong>
+									<strong class='primery-font'>Only members can write.</strong>
 									<small class='pull-right text-muted'>20XX-XX-XX XX:XX</small>
 								</div>
 								<!-- /header -->

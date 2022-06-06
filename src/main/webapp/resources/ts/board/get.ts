@@ -149,7 +149,7 @@ class Reply {
         const replyText = document.querySelector("#replyText");
         if (replyText instanceof HTMLTextAreaElement) {
           const text = replyText.value;
-          if (replyText.value === "") {
+          if (replyText.value.trim() === "") {
             alert("공백입니다.");
             return;
           }
@@ -167,8 +167,74 @@ class Reply {
           .then((result) => {
             if (result === 1) {
               alert("등록에 성공하였습니다.");
+              if (replyText instanceof HTMLTextAreaElement) {
+                replyText.value = "";
+              }
             } else {
               alert("등록에 실패하였습니다");
+            }
+            this.drawReply();
+          })
+          .catch((error) => console.error(error));
+      });
+    }
+    //Modify Or Delete
+    const replyWrap = document.querySelector(".chat");
+    if (replyWrap instanceof HTMLUListElement) {
+      replyWrap.addEventListener("click", (e: any) => {
+        const target = e.target as HTMLButtonElement;
+        if (target.type !== "button") return;
+        const rno = target.parentElement?.dataset.rno ?? "0";
+        this.replyData.rno = rno;
+        const classArr = target.classList;
+        let url = "";
+        let message = "";
+        if (classArr.contains("replyModify")) {
+          let beforeRe =
+            target.parentElement?.parentElement?.querySelector("p");
+          let replyTxt = "";
+          //modify Mod Check
+          if (!target.classList.contains("changeMod")) {
+            target.classList.add("changeMod");
+            debugger;
+            const promp = prompt(
+              "변경할 내용일 입력해주세요.",
+              beforeRe?.textContent ?? ""
+            );
+            if (beforeRe instanceof HTMLElement) {
+              beforeRe.innerText = promp ?? "";
+            }
+            target.textContent = "Change";
+            return;
+          }
+          url = "modifyReply";
+          message = "수정";
+          //this.replyData.replyer = "TODO Make Login Service";
+          this.replyData.reply =
+            beforeRe?.textContent ?? "수정에 문제가 발생하였습니다.";
+          target.classList.remove("changeMod");
+        } else if (classArr.contains("replyDelete")) {
+          //delete
+          url = "deleteReply";
+          message = "삭제";
+        } else {
+          alert("Error");
+          return;
+        }
+        fetch(`/reply/${url}`, {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(this.replyData),
+        })
+          .then((response) => response.json())
+          .then((result) => {
+            if (result === 1) {
+              alert(`${message}에 성공하였습니다.`);
+            } else {
+              alert(`${message}에 실패하였습니다`);
             }
             this.drawReply();
           })
@@ -194,13 +260,19 @@ class Reply {
           ul.innerHTML = "";
           let HTMLLiElem = "";
           for (let i of result.result) {
-            HTMLLiElem += "<li class='left clear-fix' data-rno='0'>";
+            HTMLLiElem += `<li class='left clear-fix'>`;
             HTMLLiElem += "<div>";
             HTMLLiElem += "<div class='header'>";
             HTMLLiElem += `<strong class='primery-font'>${i["replyer"]}</strong>`;
             HTMLLiElem += `<small class='pull-right text-muted'>${i["updateDate"]}</small>`;
             HTMLLiElem += "</div>";
+            HTMLLiElem += `<div class="replyBody">`;
             HTMLLiElem += `<p>${i["reply"]}</p>`;
+            HTMLLiElem += `<div class="btnWrap" data-rno='${i["rno"]}'>`;
+            HTMLLiElem += `<button type="button" class="btn btn-default replyModify">Modify</button>`;
+            HTMLLiElem += `<button type="button" class="btn btn-default replyDelete">Delete</button>`;
+            HTMLLiElem += `</div>`;
+            HTMLLiElem += "</div>";
             HTMLLiElem += "</div>";
             HTMLLiElem += "</li>";
           }
