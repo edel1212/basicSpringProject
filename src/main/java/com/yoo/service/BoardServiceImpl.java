@@ -3,6 +3,7 @@ package com.yoo.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.yoo.domain.BoardVO;
 import com.yoo.domain.Criteria;
@@ -14,6 +15,7 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @Service
 @AllArgsConstructor
+@Transactional
 public class BoardServiceImpl implements BoardService {
 	
 	private BoardMapper boardMapper;
