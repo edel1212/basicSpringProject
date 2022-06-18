@@ -25,8 +25,8 @@ class Register {
     document.querySelector("#submit")?.addEventListener("click", () => {
       let regidObj: RegiType = {
         title: this.title.value,
-        writer: this.content.value,
-        content: this.writer.value,
+        content: this.content.value,
+        writer: this.writer.value,
       };
       this.register(regidObj);
     });

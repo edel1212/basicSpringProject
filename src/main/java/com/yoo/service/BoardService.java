@@ -2,6 +2,7 @@ package com.yoo.service;
 
 import java.util.List;
 
+
 import com.yoo.domain.BoardVO;
 import com.yoo.domain.Criteria;
 

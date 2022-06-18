@@ -1,11 +1,11 @@
 type BoardList = [
   {
-    rn: string;
     bno: string;
     title: string;
     writer: string;
     regdate: string;
     updatedate: string;
+    replyCnt: string;
   }
 ];
 
@@ -30,6 +30,14 @@ type PageData = {
 
 window.onload = () => {
   new List();
+};
+
+let chageDate = (param: number) => {
+  const date = new Date(param);
+  const YYYY = date.getFullYear();
+  const MM = date.getDay() < 10 ? "0" + date.getDay() : date.getDay();
+  const DD = date.getDate();
+  return `${YYYY}-${MM}-${DD}`;
 };
 
 class List {
@@ -218,19 +226,18 @@ class List {
     for (let i in data) {
       htmlCode += `<tr data-id=${data[i]["bno"]}>`;
       htmlCode += "<td>";
-      htmlCode += data[i]["rn"];
-      htmlCode += "</td>";
-      htmlCode += "<td>";
-      htmlCode += data[i]["title"];
+      htmlCode +=
+        data[i]["title"] +
+        `   <b style="color:var(--blue);">[ ${data[i]["replyCnt"]} ]</b>`;
       htmlCode += "</td>";
       htmlCode += "<td>";
       htmlCode += data[i]["writer"];
       htmlCode += "</td>";
       htmlCode += "<td>";
-      htmlCode += data[i]["regdate"];
+      htmlCode += chageDate(Number(data[i]["regdate"]));
       htmlCode += "</td>";
       htmlCode += "<td>";
-      htmlCode += data[i]["updatedate"];
+      htmlCode += chageDate(Number(data[i]["updatedate"]));
       htmlCode += "</td>";
       htmlCode += "</tr>";
     } //for

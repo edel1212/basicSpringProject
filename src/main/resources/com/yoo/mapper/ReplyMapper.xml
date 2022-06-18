@@ -10,7 +10,7 @@
 
 	<insert id="registerReply" parameterType="com.yoo.domain.ReplyVO">
   		INSERT INTO tbl_reply (rno, bno, reply, replyer) VALUES(
-			(select nextval(seq))
+			(select nextval(seq_reply))
 			, #{bno}
 			, #{reply}
 			, #{replyer}

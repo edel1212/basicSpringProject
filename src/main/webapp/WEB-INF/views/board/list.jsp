@@ -22,11 +22,10 @@
 	                    <table class="table table-striped table-boredered table-hover" width="100%" cellspacing="0">
 	                        <thead>
 	                            <tr>
-	                                <th>번호</th>
-	                                <th>제목</th>
-	                                <th>작성자</th>
-	                                <th>작성일</th>
-	                                <th>수정일</th>	                                
+	                                <th style="width:70%">제목</th>
+	                                <th style="width:10%">작성자</th>
+	                                <th style="width:10%">작성일</th>
+	                                <th style="width:10%">수정일</th>	                                
 	                            </tr>
 	                        </thead>
 	                       

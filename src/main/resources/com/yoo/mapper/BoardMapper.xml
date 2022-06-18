@@ -7,15 +7,17 @@
   	<select id="getList" parameterType="com.yoo.domain.Criteria"  resultType="com.yoo.domain.BoardVO">
   		
 		SELECT  
-			ROW_NUMBER() OVER()  AS rn 
+			ROW_NUMBER() OVER() AS rn 
 			, bno 
 			, title
 			, content
 			, writer
 			, regdate
 			, updatedate
+			, replyCnt
 		 FROM tbl_board
 		 <include refid="criteria"></include>
+		 ORDER BY bno DESC
 		 LIMIT #{pageNum} ,#{amount}	
   	</select>
   	
@@ -47,7 +49,12 @@
   	
   	<insert id="register" parameterType="com.yoo.domain.BoardVO">
   		INSERT INTO tbl_board (
-				bno, title, content, writer, regdate, updatedate
+				  bno
+				, title
+				, content
+				, writer
+				, regdate
+				, updatedate
 			) VALUES (
 				(select nextval(seq))
 				, #{title}
@@ -74,4 +81,11 @@
   	<delete id="delete">
   		DELETE FROM tbl_board WHERE bno = #{bno}
   	</delete>
+  	
+  	<update id="updateReplyCnt">
+  		UPDATE tbl_board SET
+  			replyCnt = replyCnt + #{amount} 
+  		WHERE bno = #{bno}
+  	</update>
+  	
   </mapper>

@@ -30,7 +30,7 @@ public class ReplyServiceTest {
 	public void getList() {
 		log.info("getReplyList...");
 		ReplyVO vo = new ReplyVO();
-		vo.setBno(6L);
+		vo.setBno(8L);
 		log.info(replyService.getReply(vo));
 	}
 	
@@ -38,9 +38,9 @@ public class ReplyServiceTest {
 	public void register() {
 		log.info("register..");
 		ReplyVO vo = new ReplyVO();
-		vo.setBno(12L);
-		vo.setReply("yoo reply");
-		vo.setReplyer("yoo!!!");
+		vo.setBno(8L);
+		vo.setReply("yoo reply@@");
+		vo.setReplyer("yoo!!!@@");
 		log.info(replyService.registerReply(vo));
 	}
 	

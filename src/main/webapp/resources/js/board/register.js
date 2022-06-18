@@ -11,8 +11,8 @@ class Register {
         (_a = document.querySelector("#submit")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", () => {
             let regidObj = {
                 title: this.title.value,
-                writer: this.content.value,
-                content: this.writer.value,
+                content: this.content.value,
+                writer: this.writer.value,
             };
             this.register(regidObj);
         });

@@ -2,12 +2,15 @@ package com.yoo.service;
 
 import static org.junit.Assert.assertNotNull;
 
+import java.util.stream.IntStream;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.yoo.domain.BoardVO;
 import com.yoo.domain.Criteria;
 
 import lombok.extern.log4j.Log4j;
@@ -54,6 +57,17 @@ public class BoardServiceTest {
 		
 		//log.info("endNum === " + endPageNum);
 		
+	}
+	
+	@Test
+	public void register() {
+		IntStream.range(0, 150).forEach((i)->{
+			BoardVO vo = new BoardVO();
+			vo.setTitle("Title"+(i+1));
+			vo.setContent("Content"+(i+1));
+			vo.setWriter("Yoo"+(i+1));
+			boardService.register(vo);
+		});
 	}
 	
 }
