@@ -39,6 +39,18 @@
               <label>Writer</label>
               <input class="form-control" name="writer" readonly="readonly" />
             </div>
+            
+            <div class="row">
+            	<div class="col-lg-12" style="display: flex;justify-content: space-between;align-items: flex-end;">
+            		<div class="panel-heading" style="height:40px">File Attach</div>
+           		</div>
+           		<div class="uploadResult">
+					<ul>
+						<!-- script -->
+					</ul>
+				</div>
+            </div>
+            
              <div class="form-group">
 	            <button id="modify" type="button" class="btn btn-default">Modify</button>
 	            <button id="delete" type="button" class="btn btn-default">Delete</button>
@@ -99,5 +111,5 @@
 	<!-- /row -->   
   
 </div>
-<script src="/resources/js/board/get.js"></script>
+<script type="module" src="/resources/js/board/get.js"></script>
 <%@include file="../includes/footer.jsp" %>

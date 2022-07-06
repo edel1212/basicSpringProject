@@ -32,7 +32,7 @@ window.onload = () => {
   new List();
 };
 
-let chageDate = (param: number) => {
+export const chageDate = (param: number) => {
   const date = new Date(param);
   const YYYY = date.getFullYear();
   const MM = date.getDay() < 10 ? "0" + date.getDay() : date.getDay();

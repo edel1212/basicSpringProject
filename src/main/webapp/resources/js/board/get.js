@@ -32,10 +32,51 @@ class Board {
             this.title.value = result["title"];
             this.content.value = result["content"];
             this.writer.value = result["writer"];
+            /**files section */
+            let files = result["attachList"];
+            const uploadRstUL = document.querySelector(".uploadResult ul");
+            let str = "";
+            files.forEach((obj) => {
+                const FileDownCallPath = encodeURIComponent(obj["uploadPath"] + "/" + obj["uuid"] + "_" + obj["fileName"]);
+                if (!obj["fileType"]) {
+                    obj.fileType = true;
+                    str +=
+                        "<li style='display:flex'><img style='width:25px;margin-right:5px;' src='/resources/img/file.png'>";
+                    str += "<a href='";
+                    str += "/board/download?fileName=" + FileDownCallPath;
+                    str += "'>";
+                    str += obj["fileName"];
+                    str += "</a>";
+                    str += "</li>";
+                }
+                else {
+                    obj.fileType = false;
+                    const thumFileCallPath = encodeURIComponent(obj["uploadPath"] +
+                        "/" +
+                        "s_" +
+                        obj["uuid"] +
+                        "_" +
+                        obj["fileName"]);
+                    str += "<li style='display:flex'>";
+                    str +=
+                        "<img style='width:25px;margin-right:5px;' src='/board/display?fileName=" +
+                            thumFileCallPath +
+                            "'>";
+                    str += "<a href='";
+                    str += "/board/download?fileName=" + FileDownCallPath;
+                    str += "'>";
+                    str += obj["fileName"];
+                    str += "</a>";
+                    str += "</li>";
+                } //if-else
+            });
+            if (uploadRstUL instanceof HTMLUListElement) {
+                uploadRstUL.insertAdjacentHTML("beforeend", str);
+            }
         })
             .catch((error) => {
             console.log(error);
-            location.href = "404Page";
+            //  location.href = "404Page";
         });
         /**
          * btn Event
@@ -197,7 +238,7 @@ class Reply {
                     message = "수정";
                     //this.replyData.replyer = "TODO Make Login Service";
                     this.replyData.reply =
-                        (_f = beforeRe === null || beforeRe === void 0 ? void 0 : beforeRe.textContent) !== null && _f !== void 0 ? _f : "수정에 문제가 발생하였습니다.";
+                        (_f = beforeRe === null || beforeRe === void 0 ? void 0 : beforeRe.textContent) !== null && _f !== void 0 ? _f : "수정에 문제가 발생하였습니다.d";
                     target.classList.remove("changeMod");
                 }
                 else if (classArr.contains("replyDelete")) {
@@ -254,7 +295,8 @@ class Reply {
                     HTMLLiElem += "<div>";
                     HTMLLiElem += "<div class='header'>";
                     HTMLLiElem += `<strong class='primery-font'>${i["replyer"]}</strong>`;
-                    HTMLLiElem += `<small class='pull-right text-muted'>${i["updateDate"]}</small>`;
+                    HTMLLiElem += `<small class='pull-right text-muted'>
+                              ${i["updateDate"]}</small>`;
                     HTMLLiElem += "</div>";
                     HTMLLiElem += `<div class="replyBody">`;
                     HTMLLiElem += `<p>${i["reply"]}</p>`;

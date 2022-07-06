@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.yoo.domain.BoardAttachVO;
 import com.yoo.domain.BoardVO;
 import com.yoo.domain.Criteria;
+import com.yoo.mapper.BoardAttachMapper;
 import com.yoo.mapper.BoardMapper;
 
 import lombok.AllArgsConstructor;
@@ -19,6 +21,8 @@ import lombok.extern.log4j.Log4j;
 public class BoardServiceImpl implements BoardService {
 	
 	private BoardMapper boardMapper;
+	
+	private BoardAttachMapper boardAttachMapper;
 	
 	@Override
 	public List<BoardVO> getList(Criteria criteria) {
@@ -36,13 +40,27 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int register(BoardVO vo) {
 		log.info("servieImp - regisger...");
-		return boardMapper.register(vo);
+		
+		vo.setBno(boardMapper.bnoSeq());
+		
+		int result = boardMapper.register(vo);
+		
+		//업로드 파일이 존재할경우
+		if(vo.getAttachList() != null && vo.getAttachList().size() > 0) {
+			for(BoardAttachVO attach : vo.getAttachList()) {
+				attach.setBno(vo.getBno());
+				boardAttachMapper.insert(attach);
+			}
+		}
+		return result;
 	}
 
 	@Override
 	public BoardVO get(Long bno) {		
 		log.info("servieImp - Get...");
-		return boardMapper.get(bno);
+		BoardVO result = boardMapper.get(bno);
+		result.setAttachList(boardAttachMapper.getAttList(bno));
+		return result;
 	}
 
 	@Override

@@ -14,6 +14,7 @@ public interface BoardMapper {
 	public BoardVO get(Long bno);
 	public int update(BoardVO vo);
 	public int delete(Long bno);
+	public Long bnoSeq();
 	//댓글 수 
 	public void updateReplyCnt(@Param("bno") Long bno,@Param("amount") int amount);
 }

@@ -1,7 +1,9 @@
 "use strict";
+var _a;
 window.onload = () => {
     new Register();
 };
+let fileObj = [];
 class Register {
     constructor() {
         var _a, _b;
@@ -13,6 +15,7 @@ class Register {
                 title: this.title.value,
                 content: this.content.value,
                 writer: this.writer.value,
+                attachList: fileObj,
             };
             this.register(regidObj);
         });
@@ -43,4 +46,147 @@ class Register {
             .catch((error) => console.log(error));
     }
 }
+/***File Upload 처리 */
+//확장자 정규식
+const regex = new RegExp("(.*?).(exe|shzip|alz)$");
+//5MB
+const maxSize = 524880;
+//허용 검사
+const checkExtension = (fileName, fileSize) => {
+    if (fileSize >= maxSize) {
+        alert("파일사이즈 초과");
+        return false;
+    }
+    if (regex.test(fileName)) {
+        alert("해당 종류의 파일은 업로드할 수 없습니다.");
+        return false;
+    }
+    return true;
+};
+(_a = document.querySelector("#fileInput")) === null || _a === void 0 ? void 0 : _a.addEventListener("change", (e) => {
+    /** 데이터를 담을 객체 */
+    let formData = new FormData();
+    /** target Input */
+    let inputFile = document.querySelector("input[name='uploadFile']");
+    if (inputFile instanceof HTMLInputElement) {
+        /** 배열 형태로 데이터를 나열 */
+        const files = inputFile.files;
+        for (let i of files) {
+            //검사
+            if (!checkExtension(i.name, i.size))
+                return;
+            //FormData 객체에 파일을 주입
+            formData.append("uploadFile", i);
+        } //for
+        for (let key of formData.keys()) {
+            console.log(key);
+        }
+        for (let value of formData.values()) {
+            console.log(value);
+        }
+        fetch("/board/uploadAction", {
+            method: "POST",
+            cache: "no-cache",
+            body: formData,
+        })
+            .then((response) => response.json())
+            .then((data) => {
+            var _a;
+            console.log("data", data);
+            //file input 초기화
+            const fileInput = document.querySelector("input[name='uploadFile']");
+            if (fileInput instanceof HTMLInputElement) {
+                fileInput.value = "";
+            }
+            //파일 목록 생성
+            const uploadRstUL = document.querySelector(".uploadResult ul");
+            let str = "";
+            data.forEach((obj) => {
+                const FileDownCallPath = encodeURIComponent(obj["uploadPath"] + "/" + obj["uuid"] + "_" + obj["fileName"]);
+                if (!obj["image"]) {
+                    obj.fileType = false;
+                    str +=
+                        "<li style='display:flex'><img style='width:25px;margin-right:5px;' src='/resources/img/file.png'>";
+                    str += "<a href='";
+                    str += "/board/download?fileName=" + FileDownCallPath;
+                    str += "'>";
+                    str += obj["fileName"];
+                    str += "</a>";
+                    str +=
+                        "<button type='button' style='background: none;border: none;color: red;' data-file=";
+                    str +=
+                        FileDownCallPath +
+                            " data-type='file' " +
+                            "data-uuid=" +
+                            obj["uuid"];
+                    str += ">X</button>";
+                    str += "</li>";
+                }
+                else {
+                    obj.fileType = true;
+                    const thumFileCallPath = encodeURIComponent(obj["uploadPath"] +
+                        "/" +
+                        "s_" +
+                        obj["uuid"] +
+                        "_" +
+                        obj["fileName"]);
+                    str += "<li style='display:flex'>";
+                    str +=
+                        "<img style='width:25px;margin-right:5px;' src='/board/display?fileName=" +
+                            thumFileCallPath +
+                            "'>";
+                    str += "<a href='";
+                    str += "/board/download?fileName=" + FileDownCallPath;
+                    str += "'>";
+                    str += obj["fileName"];
+                    str += "</a>";
+                    str +=
+                        "<button type='button' style='background: none;border: none;color: red;' data-file=";
+                    str +=
+                        thumFileCallPath +
+                            " data-type='image' " +
+                            "data-uuid=" +
+                            obj["uuid"];
+                    str += ">X</button>";
+                    str += "</li>";
+                } //if-else
+                /**전역변수에 파일 등록 */
+                fileObj.push(obj);
+            });
+            if (uploadRstUL instanceof HTMLUListElement) {
+                uploadRstUL.insertAdjacentHTML("beforeend", str);
+            }
+            (_a = document
+                .querySelector(".uploadResult ul")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", (e) => {
+                const target = e.target;
+                if (target.nodeName !== "BUTTON") {
+                    return;
+                }
+                const data = target.dataset.file;
+                const type = target.dataset.type;
+                const uuid = target.dataset.uuid;
+                fetch("/board/deleteFile", {
+                    method: "POST",
+                    cache: "no-cache",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ fileName: data, type: type }),
+                })
+                    .then((response) => {
+                    console.log(response);
+                })
+                    .then((result) => {
+                    //fileObj 삭제
+                    for (let i = 0; i < fileObj.length; i++) {
+                        if (fileObj[i].uuid === uuid) {
+                            fileObj.splice(i, 1);
+                        }
+                    }
+                    target.parentElement.remove();
+                })
+                    .catch((error) => console.log(error));
+            });
+        })
+            .catch((error) => console.log(error));
+    }
+});
 //# sourceMappingURL=register.js.map

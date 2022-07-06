@@ -1,8 +1,7 @@
-"use strict";
 window.onload = () => {
     new List();
 };
-let chageDate = (param) => {
+export const chageDate = (param) => {
     const date = new Date(param);
     const YYYY = date.getFullYear();
     const MM = date.getDay() < 10 ? "0" + date.getDay() : date.getDay();

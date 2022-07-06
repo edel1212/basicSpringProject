@@ -47,6 +47,10 @@
   		</where>
   	</sql>
   	
+  	<select id="bnoSeq" resultType="long">
+  		SELECT nextval(seq) AS bno;
+  	</select>
+  	
   	<insert id="register" parameterType="com.yoo.domain.BoardVO">
   		INSERT INTO tbl_board (
 				  bno
@@ -56,7 +60,7 @@
 				, regdate
 				, updatedate
 			) VALUES (
-				(select nextval(seq))
+				  #{bno}
 				, #{title}
 				, #{content}
 				, #{writer}

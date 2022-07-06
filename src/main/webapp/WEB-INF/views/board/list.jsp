@@ -70,5 +70,5 @@
 	    <!-- /.container-fluid -->
 	
 	<!-- End of Main Content -->
-    <script src="/resources/js/board/board.js"></script>
+    <script type="module" src="/resources/js/board/board.js"></script>
 <%@include file="../includes/footer.jsp" %>
