@@ -11,6 +11,31 @@
 					}
 	.chat p{overflow: hidden;word-wrap:break-word;}
 	.chat .header{display: flex;justify-content: space-between;}
+	
+	.filebox label {
+	  display: inline-block;
+	  padding: .5em .75em;
+	  color: #fff;
+	  font-size: inherit;
+	  line-height: normal;
+	  vertical-align: middle;
+	  cursor: pointer;
+	  border-bottom-color: #e2e2e2;
+	  border-radius: .25em;
+	  background-color: #337ab7;
+  	border-color: #2e6da4;
+	}
+	
+	.filebox input[type="file"] {  /* 파일 필드 숨기기 */
+	  position: absolute;
+	  width: 1px;
+	  height: 1px;
+	  padding: 0;
+	  margin: -1px;
+	  overflow: hidden;
+	  clip:rect(0,0,0,0);
+	  border: 0;
+	}
 </style>
 <!-- Begin Page Content -->
 <div class="container-fluid">
@@ -41,7 +66,7 @@
             </div>
             
             <div class="row">
-            	<div class="col-lg-12" style="display: flex;justify-content: space-between;align-items: flex-end;">
+            	<div class="col-lg-12 fileWrap" style="display: flex;justify-content: space-between;align-items: flex-end;">
             		<div class="panel-heading" style="height:40px">File Attach</div>
            		</div>
            		<div class="uploadResult">

@@ -47,6 +47,14 @@ class Board {
                     str += "'>";
                     str += obj["fileName"];
                     str += "</a>";
+                    str +=
+                        "<button type='button' style='background: none;border: none;color: red;display:none' data-file=";
+                    str +=
+                        FileDownCallPath +
+                            " data-type='file' " +
+                            "data-uuid=" +
+                            obj["uuid"];
+                    str += ">X</button>";
                     str += "</li>";
                 }
                 else {
@@ -67,6 +75,14 @@ class Board {
                     str += "'>";
                     str += obj["fileName"];
                     str += "</a>";
+                    str +=
+                        "<button type='button' style='background: none;border: none;color: red;display:none' data-file=";
+                    str +=
+                        thumFileCallPath +
+                            " data-type='image' " +
+                            "data-uuid=" +
+                            obj["uuid"];
+                    str += ">X</button>";
                     str += "</li>";
                 } //if-else
             });
@@ -76,7 +92,7 @@ class Board {
         })
             .catch((error) => {
             console.log(error);
-            //  location.href = "404Page";
+            location.href = "404Page";
         });
         /**
          * btn Event
@@ -93,6 +109,23 @@ class Board {
                         if (this.modify instanceof HTMLButtonElement) {
                             this.modify.innerHTML = "Change";
                         }
+                        /***
+                         * 파일 수정 옵션 추가
+                         */
+                        //업로드 버튼 생성
+                        const fileUploadBtn = document.querySelector(".fileWrap");
+                        fileUploadBtn === null || fileUploadBtn === void 0 ? void 0 : fileUploadBtn.insertAdjacentHTML("beforeend", `<div class="panel-body filebox">
+                <label for="fileInput">Upload</label>
+                <input id="fileInput" type="file" name="uploadFile" multiple >
+              </div>`);
+                        //삭제버튼 활성화
+                        document
+                            .querySelectorAll(".uploadResult ul li button")
+                            .forEach((item) => {
+                            if (item instanceof HTMLElement) {
+                                item.style.display = "block";
+                            }
+                        });
                     }
                 }
                 else {

@@ -28,4 +28,9 @@
 		DELETE FROM tbl_attach WHERE uuid = #{uuid}
 	</delete>
 	
+	<delete id="deleteAll">
+		DELETE FROM tbl_attach WHERE bno = #{bno}
+	</delete>
+	
+	
 </mapper>

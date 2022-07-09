@@ -1,5 +1,8 @@
 package com.yoo.service;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -72,7 +75,54 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int delete(Long bno) {
 		log.info("servieImp - delete...");
+		
+		List<BoardAttachVO> attachList = boardAttachMapper.getAttList(bno);
+		boardAttachMapper.deleteAll(bno);
+		deleteFiles(attachList);
+		
 		return boardMapper.delete(bno);
 	}
 
+	
+	/**
+	 * @Description : 게시물 삭제시 하위 첨부파일 삭제 로직
+	 * **/
+	private void deleteFiles(List<BoardAttachVO> attachList) {
+		
+		if(attachList == null || attachList.size() == 0) return;
+		
+		log.info("delte attach Files!");
+		log.info("attachList ::: " + attachList);
+			
+		attachList.forEach((attach)->{
+			log.info(attach);
+			try {
+				
+				Path file = Paths.get("C:\\upload\\"
+										+	attach.getUploadPath()
+										+ "\\" 
+										+ attach.getUuid()
+										+ "_"
+										+ attach.getFileName());
+				//Delete
+				Files.deleteIfExists(file);
+				
+				//Image Check
+				if(Files.probeContentType(file).startsWith("image")) {
+					Path thumbNail = Paths.get("C:\\upload\\"
+												+	attach.getUploadPath()
+												+ "\\s_" 
+												+ attach.getUuid()
+												+ "_"
+												+ attach.getFileName());
+					Files.delete(thumbNail);
+				}//if
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
+		
+	}
+	
 }

@@ -5,6 +5,8 @@ import java.io.FileOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -30,6 +32,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.yoo.domain.AttachFileDTO;
+import com.yoo.domain.BoardAttachVO;
 import com.yoo.domain.BoardVO;
 import com.yoo.domain.Criteria;
 import com.yoo.domain.PageDTO;
@@ -102,7 +105,7 @@ public class BoardController {
 	
 	@ResponseBody
 	@PostMapping("/delete")
-	public int delete(@RequestBody Long bno) {
+	public int delete(@RequestBody Long bno) {	
 		return boardService.delete(bno);
 	}
 	
@@ -290,4 +293,5 @@ public class BoardController {
 		return new ResponseEntity<String>("delete",HttpStatus.OK);
 	}
 	
+	//__EOF__
 }
