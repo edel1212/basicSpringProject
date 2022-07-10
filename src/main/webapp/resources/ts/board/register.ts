@@ -14,9 +14,9 @@ type RegiResult = {
 
 type AttachObj = {
   fileName: String;
-  uploadPath: String;
-  uuid: String;
-  image: boolean;
+  uploadPath?: String;
+  uuid?: String;
+  image?: boolean;
   fileType?: boolean;
 };
 

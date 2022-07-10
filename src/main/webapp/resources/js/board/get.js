@@ -16,6 +16,7 @@ class Board {
         this.delete = document.querySelector("#delete");
         this.list = document.querySelector("#list");
         this.modiBtnChang = false;
+        this.files = [];
         /**
          * get board
          */
@@ -99,6 +100,7 @@ class Board {
          */
         if (this.modify instanceof HTMLButtonElement) {
             this.modify.addEventListener("click", () => {
+                var _a;
                 if (!this.modiBtnChang) {
                     const modifyFlag = confirm(`해당 게시물을 수정 하시겠습니까?`);
                     if (modifyFlag) {
@@ -125,6 +127,22 @@ class Board {
                             if (item instanceof HTMLElement) {
                                 item.style.display = "block";
                             }
+                        });
+                        //삭제 버튼 Event
+                        (_a = document
+                            .querySelector(".uploadResult ul")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", (e) => {
+                            const target = e.target;
+                            if (target.nodeName !== "BUTTON") {
+                                return;
+                            }
+                            //Object에 삭제 데이터 추가 필요
+                            target.parentElement.remove();
+                            const data = target.dataset.file;
+                            const type = target.dataset.type;
+                            const uuid = target.dataset.uuid;
+                            let fileObj = { fileName: data, type: type };
+                            this.files.push(fileObj);
+                            console.log("delete Files Info ::: ", this.files);
                         });
                     }
                 }
@@ -192,7 +210,7 @@ class Board {
             });
         }
     }
-}
+} //Board Class
 class Reply {
     constructor() {
         this.bno = localStorage.getItem("bno");

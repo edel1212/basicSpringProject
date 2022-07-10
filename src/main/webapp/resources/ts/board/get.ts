@@ -15,6 +15,7 @@ type ReplyData = {
 };
 
 class Board {
+  private files: Array<AttachObj>;
   private bno = localStorage.getItem("bno");
   private title = document.querySelector(
     "input[name=title]"
@@ -30,6 +31,7 @@ class Board {
   private list = document.querySelector("#list");
   private modiBtnChang = false;
   constructor() {
+    this.files = [];
     /**
      * get board
      */
@@ -143,13 +145,29 @@ class Board {
             );
 
             //삭제버튼 활성화
-
             document
               .querySelectorAll(".uploadResult ul li button")
               .forEach((item) => {
                 if (item instanceof HTMLElement) {
                   item.style.display = "block";
                 }
+              });
+            //삭제 버튼 Event
+            document
+              .querySelector(".uploadResult ul")
+              ?.addEventListener("click", (e) => {
+                const target = e.target as any;
+                if (target.nodeName !== "BUTTON") {
+                  return;
+                }
+                //Object에 삭제 데이터 추가 필요
+                target.parentElement.remove();
+                const data = target.dataset.file;
+                const type = target.dataset.type;
+                const uuid = target.dataset.uuid;
+                let fileObj = { fileName: data, type: type };
+                this.files.push(fileObj);
+                console.log("delete Files Info ::: ", this.files);
               });
           }
         } else {
@@ -214,7 +232,7 @@ class Board {
       });
     }
   }
-}
+} //Board Class
 
 class Reply {
   private bno = localStorage.getItem("bno");
