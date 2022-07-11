@@ -45,17 +45,29 @@ class Board {
     })
       .then((response) => response.json())
       .then((result) => {
+        /**content write */
         this.title.value = result["title"];
         this.content.value = result["content"];
         this.writer.value = result["writer"];
+
         /**files section */
-        let files = result["attachList"];
+        let filesArr = result["attachList"];
         const uploadRstUL = document.querySelector(".uploadResult ul");
         let str = "";
-        files.forEach((obj: AttachObj) => {
+        filesArr.forEach((obj: AttachObj) => {
+          //URL encoding
           const FileDownCallPath = encodeURIComponent(
             obj["uploadPath"] + "/" + obj["uuid"] + "_" + obj["fileName"]
           );
+
+          //File의 정보를 가지는 Arr에 기존 File 정보 추가
+          this.files.push({
+            fileName: obj["fileName"],
+            fileType: obj["fileType"],
+            uploadPath: obj["uploadPath"],
+            uuid: obj["uuid"],
+            image: obj["fileType"],
+          });
 
           if (!obj["fileType"]) {
             obj.fileType = true;
@@ -106,6 +118,7 @@ class Board {
             str += "</li>";
           } //if-else
         });
+        console.log("base Files Info ::: ", this.files);
         if (uploadRstUL instanceof HTMLUListElement) {
           uploadRstUL.insertAdjacentHTML("beforeend", str);
         }
@@ -144,6 +157,8 @@ class Board {
               </div>`
             );
 
+            /***@TODO : 등록 event 만들어주자 this.files에 정보를 put 해줘야함! */
+
             //삭제버튼 활성화
             document
               .querySelectorAll(".uploadResult ul li button")
@@ -166,7 +181,12 @@ class Board {
                 const type = target.dataset.type;
                 const uuid = target.dataset.uuid;
                 let fileObj = { fileName: data, type: type };
-                this.files.push(fileObj);
+                //files 목록에서 uuid 기준으로 삭제
+                for (let i = 0; i < this.files.length; i++) {
+                  if (this.files[i].uuid === uuid) {
+                    this.files.splice(i, 1);
+                  }
+                }
                 console.log("delete Files Info ::: ", this.files);
               });
           }
