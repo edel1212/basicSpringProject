@@ -15,4 +15,6 @@ public class BoardAttachVO {
 	
 	private Long bno;
 	
+	private boolean newFileFlag;
+	
 }

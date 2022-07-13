@@ -100,7 +100,10 @@ public class BoardController {
 	@ResponseBody
 	@PostMapping("/modify")
 	public int modify(@RequestBody BoardVO vo) {
-		return boardService.update(vo);
+		
+		int result = boardService.update(vo);
+		
+		return result;
 	}
 	
 	@ResponseBody

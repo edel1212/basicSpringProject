@@ -69,6 +69,32 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int update(BoardVO vo) {
 		log.info("servieImp - update...");
+		
+		long bno = vo.getBno();
+		
+		List<BoardAttachVO> attachList = boardAttachMapper.getAttList(bno);
+		
+		List<BoardAttachVO> modifyAttachList = vo.getAttachList();
+		
+		if( modifyAttachList.size() < 0) {
+			boardAttachMapper.deleteAll(vo.getBno());
+		} else {
+			//TODO : 로직 확인 필요 merge문을 쓰는게 나을지도?
+			attachList.forEach((attach)->{
+				modifyAttachList.forEach((modiAttach)->{
+					modiAttach.setBno(vo.getBno());
+					if(!attach.getUuid().equals(modiAttach.getUuid())) {
+						boardAttachMapper.delete(attach.getUuid());
+					} else {
+						if(modiAttach.isNewFileFlag()) {
+							boardAttachMapper.insert(modiAttach);
+						}
+					}
+				});//modifyAttachList-LOOP
+			});//attachList-LOOP
+			
+		};//if-else
+		
 		return boardMapper.update(vo);
 	}
 

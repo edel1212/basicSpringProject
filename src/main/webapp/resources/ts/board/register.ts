@@ -18,6 +18,7 @@ type AttachObj = {
   uuid?: String;
   image?: boolean;
   fileType?: boolean;
+  newFileFlag?: boolean;
 };
 
 let fileObj: Array<AttachObj> = [];

@@ -131,7 +131,6 @@ class Board {
                 <label for="fileInput">Upload</label>
                 <input id="fileInput" type="file" name="uploadFile" multiple >
               </div>`);
-                        /***@TODO : 등록 event 만들어주자 this.files에 정보를 put 해줘야함! */
                         (_a = document
                             .querySelector("#fileInput")) === null || _a === void 0 ? void 0 : _a.addEventListener("change", (e) => {
                             /** 데이터를 담을 객체 */
@@ -224,6 +223,7 @@ class Board {
                                             str += "</li>";
                                         } //if-else
                                         /**전역변수에 파일 등록 */
+                                        obj.newFileFlag = true;
                                         this.files.push(obj);
                                     });
                                     console.log("register files ::", this.files);
@@ -272,6 +272,7 @@ class Board {
                             bno: localStorage.getItem("bno"),
                             title: this.title.value,
                             content: this.content.value,
+                            attachList: this.files,
                             writer: this.writer.value,
                         };
                         fetch("/board/modify", {
