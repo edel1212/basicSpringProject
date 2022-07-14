@@ -149,7 +149,7 @@ public class BoardController {
 				attachDTO.setUploadPath(uploadFolderPath);
 				
 				if(checkImageType(saveFile)) {
-					attachDTO.setImage(true);
+					attachDTO.setFileType(true);
 					
 					FileOutputStream thumbnail = new FileOutputStream(new File(uploadPath, "s_" + uploadFileName));
 					

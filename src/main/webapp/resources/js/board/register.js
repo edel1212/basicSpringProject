@@ -103,8 +103,7 @@ const checkExtension = (fileName, fileSize) => {
             let str = "";
             data.forEach((obj) => {
                 const FileDownCallPath = encodeURIComponent(obj["uploadPath"] + "/" + obj["uuid"] + "_" + obj["fileName"]);
-                if (!obj["image"]) {
-                    obj.fileType = false;
+                if (!obj["fileType"]) {
                     str +=
                         "<li style='display:flex'><img style='width:25px;margin-right:5px;' src='/resources/img/file.png'>";
                     str += "<a href='";
@@ -123,7 +122,6 @@ const checkExtension = (fileName, fileSize) => {
                     str += "</li>";
                 }
                 else {
-                    obj.fileType = true;
                     const thumFileCallPath = encodeURIComponent(obj["uploadPath"] +
                         "/" +
                         "s_" +

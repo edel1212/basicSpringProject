@@ -27,6 +27,7 @@
 		.btn {border : 1px solid #8080803d; transition : all 1s}
 		.btn:hover { opacity : .5}
 	</style>
+	<script type="module" src="/resources/js/board/util.js"></script>
 </head>
 <body id="page-top">
 

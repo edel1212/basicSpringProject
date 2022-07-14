@@ -66,7 +66,6 @@ class Board {
             fileType: obj["fileType"],
             uploadPath: obj["uploadPath"],
             uuid: obj["uuid"],
-            image: obj["fileType"],
           });
 
           if (!obj["fileType"]) {
@@ -214,8 +213,7 @@ class Board {
                             obj["fileName"]
                         );
 
-                        if (!obj["image"]) {
-                          obj.fileType = false;
+                        if (!obj["fileType"]) {
                           str +=
                             "<li style='display:flex'><img style='width:25px;margin-right:5px;' src='/resources/img/file.png'>";
                           str += "<a href='";
@@ -233,7 +231,6 @@ class Board {
                           str += ">X</button>";
                           str += "</li>";
                         } else {
-                          obj.fileType = true;
                           const thumFileCallPath = encodeURIComponent(
                             obj["uploadPath"] +
                               "/" +
@@ -263,7 +260,6 @@ class Board {
                           str += "</li>";
                         } //if-else
                         /**전역변수에 파일 등록 */
-                        obj.newFileFlag = true;
                         this.files.push(obj);
                       });
                       console.log("register files ::", this.files);

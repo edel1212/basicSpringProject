@@ -11,7 +11,7 @@ public class AttachFileDTO {
 	private String fileName;
 	private String uploadPath;
 	private String uuid;
-	private boolean image;
+	private boolean fileType;
 	
 	/**삭제 처리 시 확인용*/
 	private String type;
