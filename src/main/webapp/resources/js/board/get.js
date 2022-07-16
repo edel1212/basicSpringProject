@@ -141,7 +141,7 @@ class Board {
                                 const files = inputFile.files;
                                 for (let i of files) {
                                     //검사
-                                    if (!checkExtension2(i.name, i.size))
+                                    if (!checkExtension(i.name, i.size))
                                         return;
                                     //FormData 객체에 파일을 주입
                                     formData.append("uploadFile", i);
@@ -463,7 +463,7 @@ class Reply {
                     HTMLLiElem += "<div class='header'>";
                     HTMLLiElem += `<strong class='primery-font'>${i["replyer"]}</strong>`;
                     HTMLLiElem += `<small class='pull-right text-muted'>
-                              ${i["updateDate"]}</small>`;
+                              ${chageDate(i["updateDate"])}</small>`;
                     HTMLLiElem += "</div>";
                     HTMLLiElem += `<div class="replyBody">`;
                     HTMLLiElem += `<p>${i["reply"]}</p>`;
@@ -488,21 +488,4 @@ class Reply {
  *                /board/list로 변경하는 방법을 사용함
  */
 history.replaceState(null, "goList", "/board/list");
-/***File Upload 처리 */
-//확장자 정규식
-const regex2 = new RegExp("(.*?).(exe|shzip|alz)$");
-//5MB
-const maxSize2 = 524880;
-//허용 검사
-const checkExtension2 = (fileName, fileSize) => {
-    if (fileSize >= maxSize2) {
-        alert("파일사이즈 초과");
-        return false;
-    }
-    if (regex2.test(fileName)) {
-        alert("해당 종류의 파일은 업로드할 수 없습니다.");
-        return false;
-    }
-    return true;
-};
 //# sourceMappingURL=get.js.map

@@ -1,11 +1,19 @@
 /***File Upload 처리 */
+//파일 필수 데이터
+type AttachObj = {
+  fileName: String;
+  uploadPath?: String;
+  uuid?: String;
+  fileType?: boolean;
+};
+
 //확장자 정규식
-export const regex = new RegExp("(.*?).(exe|shzip|alz)$");
+const regex = new RegExp("(.*?).(exe|shzip|alz)$");
 //5MB
-export const maxSize = 524880;
+const maxSize = 524880;
 
 //허용 검사
-export const checkExtension = (fileName: string, fileSize: number) => {
+const checkExtension = (fileName: string, fileSize: number) => {
   if (fileSize >= maxSize) {
     alert("파일사이즈 초과");
     return false;
@@ -15,4 +23,13 @@ export const checkExtension = (fileName: string, fileSize: number) => {
     return false;
   }
   return true;
+};
+
+/***날짜 처리 */
+const chageDate = (param: number) => {
+  const date = new Date(param);
+  const YYYY = date.getFullYear();
+  const MM = date.getDay() < 10 ? "0" + date.getDay() : date.getDay();
+  const DD = date.getDate();
+  return `${YYYY}-${MM}-${DD}`;
 };

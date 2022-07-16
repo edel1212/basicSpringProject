@@ -1,12 +1,6 @@
+"use strict";
 window.onload = () => {
     new List();
-};
-export const chageDate = (param) => {
-    const date = new Date(param);
-    const YYYY = date.getFullYear();
-    const MM = date.getDay() < 10 ? "0" + date.getDay() : date.getDay();
-    const DD = date.getDate();
-    return `${YYYY}-${MM}-${DD}`;
 };
 class List {
     constructor() {

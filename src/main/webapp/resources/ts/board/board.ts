@@ -32,14 +32,6 @@ window.onload = () => {
   new List();
 };
 
-export const chageDate = (param: number) => {
-  const date = new Date(param);
-  const YYYY = date.getFullYear();
-  const MM = date.getDay() < 10 ? "0" + date.getDay() : date.getDay();
-  const DD = date.getDate();
-  return `${YYYY}-${MM}-${DD}`;
-};
-
 class List {
   //목록
   private element = document.querySelector("#board");

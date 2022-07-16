@@ -136,5 +136,5 @@
 	<!-- /row -->   
   
 </div>
-<script type="module" src="/resources/js/board/get.js"></script>
+<script src="/resources/js/board/get.js"></script>
 <%@include file="../includes/footer.jsp" %>
