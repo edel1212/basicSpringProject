@@ -2,7 +2,7 @@ package com.yoo.service;
 
 import java.util.List;
 
-
+import com.yoo.domain.BoardAttachVO;
 import com.yoo.domain.BoardVO;
 import com.yoo.domain.Criteria;
 
@@ -19,4 +19,7 @@ public interface BoardService {
 	public int update(BoardVO vo);
 	//삭제
 	public int delete(Long bno);
+	
+	//이전 파일 목록 가져오기
+	List<BoardAttachVO> getOldFiles();
 }

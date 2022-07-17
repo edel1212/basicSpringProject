@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.yoo.domain.BoardAttachVO;
 import com.yoo.domain.BoardVO;
 import com.yoo.domain.Criteria;
 
@@ -17,4 +18,5 @@ public interface BoardMapper {
 	public Long bnoSeq();
 	//댓글 수 
 	public void updateReplyCnt(@Param("bno") Long bno,@Param("amount") int amount);
+	
 }

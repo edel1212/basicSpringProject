@@ -136,5 +136,11 @@ public class BoardServiceImpl implements BoardService {
 		});
 		
 	}
+
+	@Override
+	public List<BoardAttachVO> getOldFiles() {
+		log.info("get getOldFileList......");
+		return boardAttachMapper.getOldFiles();
+	}
 	
 }

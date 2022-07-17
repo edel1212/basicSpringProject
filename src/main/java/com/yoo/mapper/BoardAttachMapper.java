@@ -14,4 +14,6 @@ public interface BoardAttachMapper {
 	
 	public List<BoardAttachVO> getAttList(Long bno);
 	
+	//이전 파일 목록 가져오기
+	public List<BoardAttachVO> getOldFiles();
 }

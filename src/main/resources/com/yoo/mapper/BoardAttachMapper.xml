@@ -32,5 +32,9 @@
 		DELETE FROM tbl_attach WHERE bno = #{bno}
 	</delete>
 	
+	<select id="getOldFiles" resultType="com.yoo.domain.BoardAttachVO">
+  		SELECT * FROM tbl_attach 	<!-- 현재 날짜에서 하루를 뺸 날짜 -->
+  		WHERE uploadPath = DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 1 DAY) , '%Y\%m\%d') 
+  	</select>
 	
 </mapper>
