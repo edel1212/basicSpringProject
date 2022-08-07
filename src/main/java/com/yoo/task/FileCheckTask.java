@@ -104,11 +104,12 @@ public class FileCheckTask {
 												);
 		
 		log.warn("--------------------- 최종 삭제 목록 -----------------------");
-		
-		Arrays.asList(removeFiles).forEach(data -> {
+		if(removeFiles != null) {
+			Arrays.asList(removeFiles).forEach(data -> {
 				log.warn("Delete Success List ::: " + data);
 				data.delete();
 			});
+		}
 		
 	}
 	
