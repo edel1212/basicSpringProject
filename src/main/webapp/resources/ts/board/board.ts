@@ -103,7 +103,7 @@ class List {
           "localPageNum",
           document.querySelector(".pagination .active")?.textContent ?? "1"
         );
-        location.href = "/board/get";
+        location.href = `/board/get?bno=${bno}`;
       });
     }
     //등록 클릭

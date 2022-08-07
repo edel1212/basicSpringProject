@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>    
 <%@include file="../includes/header.jsp" %>
 <style>	
 	.chat {list-style: none;padding: 5px;background: white;border-radius: 10px;}
@@ -134,7 +135,11 @@
 		<!-- /col-lg-12 -->
 	</div>
 	<!-- /row -->   
-  
 </div>
 <script src="/resources/js/board/get.js"></script>
+<script>
+	const bno = <c:out value="${bno }"></c:out>;	
+	new Board(bno);
+	new Reply(bno);
+</script>
 <%@include file="../includes/footer.jsp" %>

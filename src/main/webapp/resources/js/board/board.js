@@ -65,7 +65,7 @@ class List {
                 let bno = e.target.parentElement.getAttribute("data-id");
                 localStorage.setItem("bno", bno);
                 localStorage.setItem("localPageNum", (_b = (_a = document.querySelector(".pagination .active")) === null || _a === void 0 ? void 0 : _a.textContent) !== null && _b !== void 0 ? _b : "1");
-                location.href = "/board/get";
+                location.href = `/board/get?bno=${bno}`;
             });
         }
         //등록 클릭

@@ -1,14 +1,10 @@
 "use strict";
 window.onload = () => {
-    if (!localStorage.getItem("bno"))
-        location.href = "404Page";
-    new Board();
-    new Reply();
     localStorage.setItem("getBoard", "true");
 };
 class Board {
-    constructor() {
-        this.bno = localStorage.getItem("bno");
+    constructor(bno) {
+        this.bno = bno;
         this.title = document.querySelector("input[name=title]");
         this.content = document.querySelector("textarea[name=content]");
         this.writer = document.querySelector("input[name=writer]");
@@ -328,8 +324,8 @@ class Board {
     }
 } //Board Class
 class Reply {
-    constructor() {
-        this.bno = localStorage.getItem("bno");
+    constructor(bno) {
+        this.bno = bno;
         this.replyData = {
             bno: String(this.bno),
             reply: "TODO regiser User",

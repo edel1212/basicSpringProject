@@ -1,7 +1,4 @@
 window.onload = () => {
-  if (!localStorage.getItem("bno")) location.href = "404Page";
-  new Board();
-  new Reply();
   localStorage.setItem("getBoard", "true");
 };
 
@@ -15,7 +12,6 @@ type ReplyData = {
 };
 class Board {
   private files: Array<AttachObj>;
-  private bno = localStorage.getItem("bno");
   private title = document.querySelector(
     "input[name=title]"
   ) as HTMLInputElement;
@@ -29,7 +25,7 @@ class Board {
   private delete = document.querySelector("#delete");
   private list = document.querySelector("#list");
   private modiBtnChang = false;
-  constructor() {
+  constructor(private bno: string) {
     this.files = [];
     /**
      * get board
@@ -367,13 +363,12 @@ class Board {
 } //Board Class
 
 class Reply {
-  private bno = localStorage.getItem("bno");
   private replyData: ReplyData = {
     bno: String(this.bno),
     reply: "TODO regiser User",
     replyer: "TODO regiser User",
   };
-  constructor() {
+  constructor(private bno: string) {
     this.drawReply();
     /** btn Event */
     //add Reply
