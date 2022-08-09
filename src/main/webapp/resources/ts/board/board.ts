@@ -156,6 +156,7 @@ class List {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        "X-CSRF-TOKEN": String(localStorage.getItem("csrfTokenValue")),
       },
       body: JSON.stringify({
         pageNum: pageData["pageNum"],

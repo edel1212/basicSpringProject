@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.yoo.domain.BoardAttachVO;
 import com.yoo.domain.BoardVO;
 import com.yoo.domain.Criteria;
 

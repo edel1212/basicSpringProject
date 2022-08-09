@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.yoo.mapper.MemberMapper">
+  	
+	<resultMap type="com.yoo.domain.MemberVO" id="memberMap">
+  		<id property="userid" column="userid" />
+  		<result property="userid" column="userid" />
+  		<result property="userpw" column="userpw" />
+  		<result property="userName" column="username" />
+  		<result property="enabled" column="enabled" />
+  		<result property="regDate" column="regdate" />
+  		<result property="updateDate" column="updatedate" />
+  		<collection property="authList" resultMap="authMap"></collection>
+  	</resultMap>
+  
+  	<resultMap type="com.yoo.domain.AuthVO" id="authMap">
+  		<result property="userid" column="userid"/>
+  		<result property="auth" column="auth"/>
+  	</resultMap>
+  	
+  	<!-- 
+  		결과값을 memberMap으로 지정하고 그 값은
+  		VO의 형식과 같이 마지막 권한이 list타입으로 들어가게끔 하기위해 사용하였다
+  	 -->
+  	<select id="getMemberInfo" resultMap="memberMap" parameterType="string">
+		SELECT mem.userid, userpw, username, enabled, regdate, updatedate, auth
+		FROM tbl_member mem left outer join tbl_member_auth auth on mem.userid = auth.userid
+		where mem.userid = #{userid}
+  	</select>
+  	
+  </mapper>

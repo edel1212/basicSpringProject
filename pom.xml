@@ -155,7 +155,40 @@
 		    <version>2.3.0</version>
 		</dependency>
 
+	
+		<!-- ================================================== -->
+		<!-- spring security를 위한 maven 주입 4개의 버전이 같아야함!   -->		
+		<!-- security-web,  security-config, 				    -->		
+		<!-- security-core,  security-config,   				-->		
+		<!-- ================================================== -->
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-web -->
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-web</artifactId>
+		    <version>5.1.5.RELEASE</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-config -->
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-config</artifactId>
+		    <version>5.1.5.RELEASE</version>
+		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-core</artifactId>
+		    <version>5.1.5.RELEASE</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-taglibs -->
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-taglibs</artifactId>
+		    <version>5.1.5.RELEASE</version>
+		</dependency>
+	
 		<!-- Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>

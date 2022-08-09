@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+		
+		
+	<!-- CustomAccessDeniedHandler 빈 주입  -->
+	<bean id="customAccessDenied" class="com.yoo.security.CustomAccessDeniedHandler"/>
+		
+	<!-- CustomLoginSuccessHandler 빈 주입  -->
+	<bean id="customloginSuccess" class="com.yoo.security.CustomLoginSuccessHandler"/>
+		
+	<!-- BCryptPasswordEncoder 빈 주입  -->
+	<bean id="bcryptPasswordEncoder"
+          class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+		
+	<!-- CustomUserDetailsService 빈 주입  -->
+	<bean id="customUserDetailsService"  class="com.yoo.security.CustomUserDetailService"/>
+																 
+	<security:http>
+		<!-- 로그인 핸들러 -->
+		<security:form-login login-page="/customLogin" authentication-success-handler-ref="customloginSuccess"/>
+			
+		<!-- 잘못된 접근시 핸들러 -->
+		<security:access-denied-handler ref="customAccessDenied"/>
+		
+		<!-- 자동로그인 쿠키사용 -->
+		<security:remember-me data-source-ref="dataSource" token-validity-seconds="604800"/>
+			
+		<!-- 로그아웃 시 쿠키삭제 -->
+		<security:logout logout-url="/logout" logout-success-url="/user/login" invalidate-session="true"
+			delete-cookies="remember-me,JSESSION_ID" /> <!-- JSESSION_ID는 톰겟에서 발행한 쿠키의 이름이다 -->
+	</security:http>	
+		
+</beans>		
