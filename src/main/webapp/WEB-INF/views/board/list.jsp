@@ -68,11 +68,7 @@
 			
 	    </div>
 	    <!-- /.container-fluid -->
-	
+		
 	<!-- End of Main Content -->
-	<script>
-		localStorage.setItem("csrfHeader",'${_csrf.headerName}');
-		localStorage.setItem("csrfTokenValue",'${_csrf.token}');
-	</script>
     <script src="/resources/js/board/board.js"></script>
 <%@include file="../includes/footer.jsp" %>

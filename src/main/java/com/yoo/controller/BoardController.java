@@ -57,7 +57,6 @@ public class BoardController {
 		return "/board/list";
 	}
 	
-	@PreAuthorize("permitAll")
 	@PostMapping("/getList")
 	@ResponseBody
 	public Map<String, Object> getList(@RequestBody Criteria cri){
@@ -86,6 +85,7 @@ public class BoardController {
 		return result;
 	}
 	
+	@PreAuthorize("permitAll")
 	@GetMapping("/get")
 	public String get(String bno,Model model) {
 		log.info("get Page");

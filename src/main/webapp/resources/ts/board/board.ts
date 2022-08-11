@@ -151,12 +151,14 @@ class List {
   }
   /** -- list func -- */
   getList(pageData: PageNum) {
+    const csrfHeader = String(localStorage.getItem("csrfHeader"));
+    const csrfToken = String(localStorage.getItem("csrfTokenValue"));
     fetch("/board/getList", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        "X-CSRF-TOKEN": String(localStorage.getItem("csrfTokenValue")),
+        "X-CSRF-TOKEN": csrfToken,
       },
       body: JSON.stringify({
         pageNum: pageData["pageNum"],

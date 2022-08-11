@@ -41,11 +41,14 @@ class Register {
   }
 
   register(data: RegiType) {
+    const csrfHeader = String(localStorage.getItem("csrfHeader"));
+    const csrfToken = String(localStorage.getItem("csrfTokenValue"));
     fetch("/board/register", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        csrfHeader: csrfToken,
       },
       body: JSON.stringify(data),
     })
@@ -86,10 +89,14 @@ document.querySelector("#fileInput")?.addEventListener("change", (e) => {
     for (let value of formData.values()) {
       console.log(value);
     }
-
+    const csrfHeader = String(localStorage.getItem("csrfHeader"));
+    const csrfToken = String(localStorage.getItem("csrfTokenValue"));
     fetch("/board/uploadAction", {
       method: "POST",
       cache: "no-cache",
+      headers: {
+        csrfHeader: csrfToken,
+      },
       body: formData,
     })
       .then((response) => response.json())
@@ -176,7 +183,10 @@ document.querySelector("#fileInput")?.addEventListener("change", (e) => {
             fetch("/board/deleteFile", {
               method: "POST",
               cache: "no-cache",
-              headers: { "Content-Type": "application/json" },
+              headers: {
+                "Content-Type": "application/json",
+                csrfHeader: csrfToken,
+              },
               body: JSON.stringify({ fileName: data, type: type }),
             })
               .then((response) => {
