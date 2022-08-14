@@ -41,7 +41,11 @@ class Register {
   }
 
   register(data: RegiType) {
-    const csrfToken = String(localStorage.getItem("csrfTokenValue"));
+    const csrfEle = document.querySelector("#csrfToken");
+    let csrfToken = "";
+    if (csrfEle instanceof HTMLInputElement) {
+      csrfToken = csrfEle.value;
+    }
     fetch("/board/register", {
       method: "POST",
       headers: {
@@ -89,7 +93,11 @@ document.querySelector("#fileInput")?.addEventListener("change", (e) => {
       console.log(value);
     }
 
-    const csrfToken = String(localStorage.getItem("csrfTokenValue"));
+    const csrfEle = document.querySelector("#csrfToken");
+    let csrfToken = "";
+    if (csrfEle instanceof HTMLInputElement) {
+      csrfToken = csrfEle.value;
+    }
     fetch("/board/uploadAction", {
       method: "POST",
       cache: "no-cache",

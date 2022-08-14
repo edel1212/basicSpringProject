@@ -24,7 +24,11 @@ class Register {
         });
     }
     register(data) {
-        const csrfToken = String(localStorage.getItem("csrfTokenValue"));
+        const csrfEle = document.querySelector("#csrfToken");
+        let csrfToken = "";
+        if (csrfEle instanceof HTMLInputElement) {
+            csrfToken = csrfEle.value;
+        }
         fetch("/board/register", {
             method: "POST",
             headers: {
@@ -69,7 +73,11 @@ class Register {
         for (let value of formData.values()) {
             console.log(value);
         }
-        const csrfToken = String(localStorage.getItem("csrfTokenValue"));
+        const csrfEle = document.querySelector("#csrfToken");
+        let csrfToken = "";
+        if (csrfEle instanceof HTMLInputElement) {
+            csrfToken = csrfEle.value;
+        }
         fetch("/board/uploadAction", {
             method: "POST",
             cache: "no-cache",

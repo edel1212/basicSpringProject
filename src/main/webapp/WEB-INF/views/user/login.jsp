@@ -98,11 +98,6 @@
 
     <!-- Custom scripts for all pages-->
     <script src="/resources/js/sb-admin-2.min.js"></script>
-    <!-- csrf -->
-	<script>
-		localStorage.setItem("csrfHeader",'${_csrf.headerName}');
-		localStorage.setItem("csrfTokenValue",'${_csrf.token}');
-	</script>
     <!-- login js -->
 	<script src="/resources/js/user/login.js"></script>
 </body>

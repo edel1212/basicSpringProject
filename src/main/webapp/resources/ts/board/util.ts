@@ -29,7 +29,10 @@ const checkExtension = (fileName: string, fileSize: number) => {
 const chageDate = (param: number) => {
   const date = new Date(param);
   const YYYY = date.getFullYear();
-  const MM = date.getDay() < 10 ? "0" + date.getDay() : date.getDay();
+  const MM =
+    date.getMonth() + 1 < 10
+      ? "0" + (date.getMonth() + 1)
+      : date.getMonth() + 1;
   const DD = date.getDate();
   return `${YYYY}-${MM}-${DD}`;
 };

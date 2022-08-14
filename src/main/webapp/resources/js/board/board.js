@@ -118,7 +118,11 @@ class List {
     /** -- list func -- */
     getList(pageData) {
         var _a, _b;
-        const csrfToken = String(localStorage.getItem("csrfTokenValue"));
+        const csrfEle = document.querySelector("#csrfToken");
+        let csrfToken = "";
+        if (csrfEle instanceof HTMLInputElement) {
+            csrfToken = csrfEle.value;
+        }
         fetch("/board/getList", {
             method: "POST",
             headers: {

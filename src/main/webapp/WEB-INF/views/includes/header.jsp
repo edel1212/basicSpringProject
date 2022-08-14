@@ -31,7 +31,7 @@
 	<script src="/resources/js/board/util.js"></script>	
 </head>
 <body id="page-top">
-
+	<input id="csrfToken" type="hidden" value='${_csrf.token}'>
     <!-- Page Wrapper -->
     <div id="wrapper">
 

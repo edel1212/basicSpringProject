@@ -30,9 +30,11 @@ class Board {
     /**
      * get board
      */
-    const csrfToken = String(localStorage.getItem("csrfTokenValue"));
-    console.log("???? :: csrfToken", csrfToken);
-    debugger;
+    const csrfEle = document.querySelector("#csrfToken");
+    let csrfToken = "";
+    if (csrfEle instanceof HTMLInputElement) {
+      csrfToken = csrfEle.value;
+    }
     fetch("/board/get", {
       method: "POST",
       headers: {
@@ -183,9 +185,11 @@ class Board {
                     console.log(value);
                   }
 
-                  const csrfToken = String(
-                    localStorage.getItem("csrfTokenValue")
-                  );
+                  const csrfEle = document.querySelector("#csrfToken");
+                  let csrfToken = "";
+                  if (csrfEle instanceof HTMLInputElement) {
+                    csrfToken = csrfEle.value;
+                  }
                   fetch("/board/uploadAction", {
                     method: "POST",
                     cache: "no-cache",
@@ -318,7 +322,11 @@ class Board {
               writer: this.writer.value,
             };
 
-            const csrfToken = String(localStorage.getItem("csrfTokenValue"));
+            const csrfEle = document.querySelector("#csrfToken");
+            let csrfToken = "";
+            if (csrfEle instanceof HTMLInputElement) {
+              csrfToken = csrfEle.value;
+            }
             fetch("/board/modify", {
               method: "POST",
               headers: {
@@ -346,7 +354,11 @@ class Board {
       this.delete.addEventListener("click", () => {
         const deleteFlag = confirm(`해당 게시물을 삭제 하시겠습니까?`);
         if (deleteFlag) {
-          const csrfToken = String(localStorage.getItem("csrfTokenValue"));
+          const csrfEle = document.querySelector("#csrfToken");
+          let csrfToken = "";
+          if (csrfEle instanceof HTMLInputElement) {
+            csrfToken = csrfEle.value;
+          }
           fetch("/board/delete", {
             method: "POST",
             headers: {
@@ -399,7 +411,11 @@ class Reply {
           }
           this.replyData["reply"] = text;
         }
-        const csrfToken = String(localStorage.getItem("csrfTokenValue"));
+        const csrfEle = document.querySelector("#csrfToken");
+        let csrfToken = "";
+        if (csrfEle instanceof HTMLInputElement) {
+          csrfToken = csrfEle.value;
+        }
         fetch("/reply/registerReply", {
           method: "POST",
           headers: {
@@ -468,7 +484,11 @@ class Reply {
           return;
         }
 
-        const csrfToken = String(localStorage.getItem("csrfTokenValue"));
+        const csrfEle = document.querySelector("#csrfToken");
+        let csrfToken = "";
+        if (csrfEle instanceof HTMLInputElement) {
+          csrfToken = csrfEle.value;
+        }
         fetch(`/reply/${url}`, {
           method: "POST",
           headers: {
@@ -493,7 +513,11 @@ class Reply {
   }
   /**draw Reply List */
   drawReply() {
-    const csrfToken = String(localStorage.getItem("csrfTokenValue"));
+    const csrfEle = document.querySelector("#csrfToken");
+    let csrfToken = "";
+    if (csrfEle instanceof HTMLInputElement) {
+      csrfToken = csrfEle.value;
+    }
     fetch("/reply/getReply", {
       method: "POST",
       headers: {
