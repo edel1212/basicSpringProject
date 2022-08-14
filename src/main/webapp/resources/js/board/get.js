@@ -354,8 +354,7 @@ class Reply {
         this.bno = bno;
         this.replyData = {
             bno: String(this.bno),
-            reply: "TODO regiser User",
-            replyer: "TODO regiser User",
+            reply: "",
         };
         this.drawReply();
         /** btn Event */
@@ -431,9 +430,8 @@ class Reply {
                     }
                     url = "modifyReply";
                     message = "수정";
-                    //this.replyData.replyer = "TODO Make Login Service";
                     this.replyData.reply =
-                        (_f = beforeRe === null || beforeRe === void 0 ? void 0 : beforeRe.textContent) !== null && _f !== void 0 ? _f : "수정에 문제가 발생하였습니다.d";
+                        (_f = beforeRe === null || beforeRe === void 0 ? void 0 : beforeRe.textContent) !== null && _f !== void 0 ? _f : "수정에 문제가 발생하였습니다.";
                     target.classList.remove("changeMod");
                 }
                 else if (classArr.contains("replyDelete")) {

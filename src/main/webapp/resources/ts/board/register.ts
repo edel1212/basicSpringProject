@@ -3,7 +3,6 @@ window.onload = () => {
 };
 type RegiType = {
   title: string;
-  writer: string;
   content: string;
   attachList: Array<AttachObj>;
 };
@@ -21,16 +20,11 @@ class Register {
   private content = document.querySelector(
     "textarea[name=content]"
   ) as HTMLTextAreaElement;
-  private writer = document.querySelector(
-    "input[name=writer]"
-  ) as HTMLInputElement;
-
   constructor() {
     document.querySelector("#submit")?.addEventListener("click", () => {
       let regidObj: RegiType = {
         title: this.title.value,
         content: this.content.value,
-        writer: this.writer.value,
         attachList: fileObj,
       };
       this.register(regidObj);

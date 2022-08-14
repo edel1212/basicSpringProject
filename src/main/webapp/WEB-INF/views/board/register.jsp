@@ -50,11 +50,7 @@ pageEncoding="UTF-8"%>
               <label>Text area</label>
               <textarea class="form-control" rows="3" name="content"></textarea>
             </div>
-            <div class="form-group">
-              <label>Writer</label>
-              <input class="form-control" name="writer" />
-            </div>
-            
+
             <div class="row">
             	<div class="col-lg-12" style="display: flex;justify-content: space-between;align-items: flex-end;">
             		<div class="panel-heading" style="height:40px">File Attach</div>

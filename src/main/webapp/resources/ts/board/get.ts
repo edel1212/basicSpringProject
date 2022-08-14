@@ -6,7 +6,6 @@ type ReplyData = {
   rno?: string;
   bno: string;
   reply: string;
-  replyer: string;
   replyDate?: string;
   updateDate?: string;
 };
@@ -392,8 +391,7 @@ class Board {
 class Reply {
   private replyData: ReplyData = {
     bno: String(this.bno),
-    reply: "TODO regiser User",
-    replyer: "TODO regiser User",
+    reply: "",
   };
   constructor(private bno: string) {
     this.drawReply();
@@ -471,9 +469,8 @@ class Reply {
           }
           url = "modifyReply";
           message = "수정";
-          //this.replyData.replyer = "TODO Make Login Service";
           this.replyData.reply =
-            beforeRe?.textContent ?? "수정에 문제가 발생하였습니다.d";
+            beforeRe?.textContent ?? "수정에 문제가 발생하였습니다.";
           target.classList.remove("changeMod");
         } else if (classArr.contains("replyDelete")) {
           //delete

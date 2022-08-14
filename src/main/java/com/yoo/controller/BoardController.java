@@ -13,6 +13,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -71,15 +74,17 @@ public class BoardController {
 	
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@GetMapping("/register")
-	public String register() {
+	public String register(Model mdoel) {
 		log.info("register..");
 		return "/board/register";
 	}
 	
 	@PostMapping("/register")
 	@ResponseBody
-	public Map<String, Integer> register(@RequestBody BoardVO vo) {
+	public Map<String, Integer> register(@RequestBody BoardVO vo, HttpServletRequest request) {
 		log.info("register");
+		HttpSession session = request.getSession();
+		vo.setWriter(String.valueOf(session.getAttribute("userId")));
 		log.info(vo);
 		Map<String, Integer> result = new HashMap<String, Integer>();
 		result.put("result", boardService.register(vo));

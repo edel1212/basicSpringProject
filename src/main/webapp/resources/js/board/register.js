@@ -9,12 +9,10 @@ class Register {
         var _a, _b;
         this.title = document.querySelector("input[name=title]");
         this.content = document.querySelector("textarea[name=content]");
-        this.writer = document.querySelector("input[name=writer]");
         (_a = document.querySelector("#submit")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", () => {
             let regidObj = {
                 title: this.title.value,
                 content: this.content.value,
-                writer: this.writer.value,
                 attachList: fileObj,
             };
             this.register(regidObj);

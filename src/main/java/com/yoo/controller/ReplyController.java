@@ -3,6 +3,9 @@ package com.yoo.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,14 +34,18 @@ public class ReplyController {
 	}
 	
 	@PostMapping("/registerReply")
-	public int registerReply(@RequestBody ReplyVO vo){
+	public int registerReply(@RequestBody ReplyVO vo, HttpServletRequest request){
 		log.info("registerReply...");
+		HttpSession session = request.getSession();
+		vo.setReplyer(String.valueOf(session.getAttribute("userId")));
 		return replyService.registerReply(vo);
 	}
 	
 	@PostMapping("/modifyReply")
-	public int modifyReply(@RequestBody ReplyVO vo){
+	public int modifyReply(@RequestBody ReplyVO vo, HttpServletRequest request){
 		log.info("modifyReply...");
+		HttpSession session = request.getSession();
+		vo.setReplyer(String.valueOf(session.getAttribute("userId")));
 		return replyService.modifyReply(vo);
 	}
 	
