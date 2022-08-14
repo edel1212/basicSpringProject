@@ -49,7 +49,7 @@ public class BoardController {
 
 	private BoardService boardService;
 	
-	@PreAuthorize("permitAll")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@GetMapping("/list")
 	public String list(Model model) {
 		log.info("list Page");
@@ -69,6 +69,7 @@ public class BoardController {
 		return result;
 	}
 	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@GetMapping("/register")
 	public String register() {
 		log.info("register..");
@@ -85,7 +86,7 @@ public class BoardController {
 		return result;
 	}
 	
-	@PreAuthorize("permitAll")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@GetMapping("/get")
 	public String get(String bno,Model model) {
 		log.info("get Page");

@@ -21,7 +21,7 @@
 																 
 	<security:http>
 		<!-- 로그인 핸들러 -->
-		<security:form-login login-page="/customLogin" authentication-success-handler-ref="customloginSuccess"/>
+		<security:form-login login-processing-url="/loginReq" login-page="/user/login" authentication-success-handler-ref="customloginSuccess"/>
 			
 		<!-- 잘못된 접근시 핸들러 -->
 		<security:access-denied-handler ref="customAccessDenied"/>
@@ -33,5 +33,18 @@
 		<security:logout logout-url="/logout" logout-success-url="/user/login" invalidate-session="true"
 			delete-cookies="remember-me,JSESSION_ID" /> <!-- JSESSION_ID는 톰겟에서 발행한 쿠키의 이름이다 -->
 	</security:http>	
+	
+	<!-- 인증과 권한 처리 -->
+		<security:authentication-manager>
+			<!-- UserDetailsService를 이용한 로그인처리 
+					 ✅ 상단에 bean으로 주입해준 CustomUserDetailsService를 사용
+					    해당 빈은 UserDetailsService구현한 구현체이며
+					    로그인 시 Custom 한 service 로직을 사용함
+					    @see : CustomUserDetailsService.java -->		
+			<security:authentication-provider user-service-ref="customUserDetailsService">
+				<!-- security에서 제공하는 클래스를 불러서 빈으로 만든 후 암호화에 사용 -->
+				<security:password-encoder ref="bcryptPasswordEncoder"/>
+			</security:authentication-provider>
+		</security:authentication-manager>
 		
 </beans>		

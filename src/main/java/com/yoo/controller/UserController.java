@@ -15,5 +15,6 @@ public class UserController {
 	public void loginPage() {
 		log.info("loginPage");
 	}
+		
 	
 }

@@ -27,11 +27,6 @@
 		.btn {border : 1px solid #8080803d; transition : all 1s}
 		.btn:hover { opacity : .5}
 	</style>
-	<!-- csrf -->
-	<script>
-		localStorage.setItem("csrfHeader",'${_csrf.headerName}');
-		localStorage.setItem("csrfTokenValue",'${_csrf.token}');
-	</script>
 	<!-- Util js -->
 	<script src="/resources/js/board/util.js"></script>	
 </head>

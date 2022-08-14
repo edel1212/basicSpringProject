@@ -30,14 +30,15 @@ class Board {
     /**
      * get board
      */
-    const csrfHeader = String(localStorage.getItem("csrfHeader"));
     const csrfToken = String(localStorage.getItem("csrfTokenValue"));
+    console.log("???? :: csrfToken", csrfToken);
+    debugger;
     fetch("/board/get", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        csrfHeader: csrfToken,
+        "X-CSRF-TOKEN": csrfToken,
       },
       body: String(this.bno),
     })
@@ -181,15 +182,15 @@ class Board {
                   for (let value of formData.values()) {
                     console.log(value);
                   }
-                  const csrfHeader = String(localStorage.getItem("csrfHeader"));
+
                   const csrfToken = String(
                     localStorage.getItem("csrfTokenValue")
                   );
-                  fetch("/board/  ", {
+                  fetch("/board/uploadAction", {
                     method: "POST",
                     cache: "no-cache",
                     headers: {
-                      csrfHeader: csrfToken,
+                      "X-CSRF-TOKEN": csrfToken,
                     },
                     body: formData,
                   })
@@ -316,14 +317,14 @@ class Board {
               attachList: this.files,
               writer: this.writer.value,
             };
-            const csrfHeader = String(localStorage.getItem("csrfHeader"));
+
             const csrfToken = String(localStorage.getItem("csrfTokenValue"));
             fetch("/board/modify", {
               method: "POST",
               headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json",
-                csrfHeader: csrfToken,
+                "X-CSRF-TOKEN": csrfToken,
               },
               body: JSON.stringify(modiObj),
             })
@@ -345,14 +346,13 @@ class Board {
       this.delete.addEventListener("click", () => {
         const deleteFlag = confirm(`해당 게시물을 삭제 하시겠습니까?`);
         if (deleteFlag) {
-          const csrfHeader = String(localStorage.getItem("csrfHeader"));
           const csrfToken = String(localStorage.getItem("csrfTokenValue"));
           fetch("/board/delete", {
             method: "POST",
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json",
-              csrfHeader: csrfToken,
+              "X-CSRF-TOKEN": csrfToken,
             },
             body: String(this.bno),
           })
@@ -399,14 +399,13 @@ class Reply {
           }
           this.replyData["reply"] = text;
         }
-        const csrfHeader = String(localStorage.getItem("csrfHeader"));
         const csrfToken = String(localStorage.getItem("csrfTokenValue"));
         fetch("/reply/registerReply", {
           method: "POST",
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            csrfHeader: csrfToken,
+            "X-CSRF-TOKEN": csrfToken,
           },
           body: JSON.stringify(this.replyData),
         })
@@ -468,14 +467,14 @@ class Reply {
           alert("Error");
           return;
         }
-        const csrfHeader = String(localStorage.getItem("csrfHeader"));
+
         const csrfToken = String(localStorage.getItem("csrfTokenValue"));
         fetch(`/reply/${url}`, {
           method: "POST",
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            csrfHeader: csrfToken,
+            "X-CSRF-TOKEN": csrfToken,
           },
           body: JSON.stringify(this.replyData),
         })
@@ -494,14 +493,13 @@ class Reply {
   }
   /**draw Reply List */
   drawReply() {
-    const csrfHeader = String(localStorage.getItem("csrfHeader"));
     const csrfToken = String(localStorage.getItem("csrfTokenValue"));
     fetch("/reply/getReply", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        csrfHeader: csrfToken,
+        "X-CSRF-TOKEN": csrfToken,
       },
       body: JSON.stringify(this.replyData),
     })

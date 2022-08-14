@@ -98,6 +98,9 @@ class List {
     if (this.element instanceof HTMLElement) {
       this.element?.addEventListener("click", (e: any) => {
         let bno = e.target.parentElement.getAttribute("data-id");
+        if (e.target.tagName === "B") {
+          bno = e.target.parentElement.parentElement.getAttribute("data-id");
+        }
         localStorage.setItem("bno", bno);
         localStorage.setItem(
           "localPageNum",
@@ -151,7 +154,6 @@ class List {
   }
   /** -- list func -- */
   getList(pageData: PageNum) {
-    const csrfHeader = String(localStorage.getItem("csrfHeader"));
     const csrfToken = String(localStorage.getItem("csrfTokenValue"));
     fetch("/board/getList", {
       method: "POST",

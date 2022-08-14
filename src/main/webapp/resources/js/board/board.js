@@ -63,6 +63,9 @@ class List {
             (_b = this.element) === null || _b === void 0 ? void 0 : _b.addEventListener("click", (e) => {
                 var _a, _b;
                 let bno = e.target.parentElement.getAttribute("data-id");
+                if (e.target.tagName === "B") {
+                    bno = e.target.parentElement.parentElement.getAttribute("data-id");
+                }
                 localStorage.setItem("bno", bno);
                 localStorage.setItem("localPageNum", (_b = (_a = document.querySelector(".pagination .active")) === null || _a === void 0 ? void 0 : _a.textContent) !== null && _b !== void 0 ? _b : "1");
                 location.href = `/board/get?bno=${bno}`;
@@ -115,7 +118,6 @@ class List {
     /** -- list func -- */
     getList(pageData) {
         var _a, _b;
-        const csrfHeader = String(localStorage.getItem("csrfHeader"));
         const csrfToken = String(localStorage.getItem("csrfTokenValue"));
         fetch("/board/getList", {
             method: "POST",

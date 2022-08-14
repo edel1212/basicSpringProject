@@ -15,10 +15,11 @@ public class CommonExceptionAdvice {
 
 	@ExceptionHandler(Exception.class)
 	public String exception(Exception ex, Model model) {
-		log.info(ex);
+		log.info(ex);		
 		model.addAttribute("exception", ex);
 		log.error(model);
-		return "error_page";
+		//return "error_page";
+		return "/user/login";
 	}
 	
 	@ExceptionHandler(NoHandlerFoundException.class)
