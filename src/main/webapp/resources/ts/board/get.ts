@@ -24,7 +24,7 @@ class Board {
   private delete = document.querySelector("#delete");
   private list = document.querySelector("#list");
   private modiBtnChang = false;
-  constructor(private bno: string) {
+  constructor(private bno: string, private userId: string) {
     this.files = [];
     /**
      * get board
@@ -49,6 +49,12 @@ class Board {
         this.title.value = result["title"];
         this.content.value = result["content"];
         this.writer.value = result["writer"];
+
+        //작성자가 다를경우 수정 및 삭제 불가능
+        if (result["writer"] !== userId) {
+          document.querySelector("#modify")?.remove();
+          document.querySelector("#delete")?.remove();
+        }
 
         /**files section */
         let filesArr = result["attachList"];
@@ -393,8 +399,8 @@ class Reply {
     bno: String(this.bno),
     reply: "",
   };
-  constructor(private bno: string) {
-    this.drawReply();
+  constructor(private bno: string, private userId: string) {
+    this.drawReply(userId);
     /** btn Event */
     //add Reply
     const addReplyBtn = document.querySelector("#addReply");
@@ -509,7 +515,7 @@ class Reply {
     }
   }
   /**draw Reply List */
-  drawReply() {
+  drawReply(userId: string) {
     const csrfEle = document.querySelector("#csrfToken");
     let csrfToken = "";
     if (csrfEle instanceof HTMLInputElement) {
@@ -541,10 +547,12 @@ class Reply {
             HTMLLiElem += "</div>";
             HTMLLiElem += `<div class="replyBody">`;
             HTMLLiElem += `<p>${i["reply"]}</p>`;
-            HTMLLiElem += `<div class="btnWrap" data-rno='${i["rno"]}'>`;
-            HTMLLiElem += `<button type="button" class="btn btn-default replyModify">Modify</button>`;
-            HTMLLiElem += `<button type="button" class="btn btn-default replyDelete">Delete</button>`;
-            HTMLLiElem += `</div>`;
+            if (userId === i["replyer"]) {
+              HTMLLiElem += `<div class="btnWrap" data-rno='${i["rno"]}'>`;
+              HTMLLiElem += `<button type="button" class="btn btn-default replyModify">Modify</button>`;
+              HTMLLiElem += `<button type="button" class="btn btn-default replyDelete">Delete</button>`;
+              HTMLLiElem += `</div>`;
+            }
             HTMLLiElem += "</div>";
             HTMLLiElem += "</div>";
             HTMLLiElem += "</li>";

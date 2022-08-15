@@ -36,12 +36,15 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <b class="btn btn-primary" id="logoutBtn" >Logout</b>
                 </div>
             </div>
         </div>
     </div>
-
+	
+	
+	<!-- logoutfro -->
+	
     <!-- Bootstrap core JavaScript-->
     <script src="/resources/vendor/jquery/jquery.min.js"></script>
     <script src="/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -55,10 +58,40 @@
     <!-- Page level plugins -->
     <script src="/resources/vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="/resources/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
+	
     <!-- Page level custom scripts -->
     <script src="/resources/js/demo/datatables-demo.js"></script>
+	<script>
+		const token = `${_csrf.token}`;
+		document.querySelector("#logoutBtn")?.addEventListener("click", () => {
+			const form = document.createElement("form");
 
+	        form.setAttribute("charset", "UTF-8");
+
+	        form.setAttribute("method", "Post");  //Post 방식
+
+	        form.setAttribute("action", "/logout"); //요청 보낼 주소
+
+
+
+	        const hiddenField = document.createElement("input");
+
+	        hiddenField.setAttribute("type", "hidden");
+
+	        hiddenField.setAttribute("name", "_csrf");
+
+	        hiddenField.setAttribute("value", token);
+
+	        form.appendChild(hiddenField);
+
+	        document.body.appendChild(form);
+
+	        form.submit();
+		});
+
+		
+		
+	</script>
 </body>
 
 </html>

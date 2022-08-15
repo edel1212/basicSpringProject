@@ -3,8 +3,9 @@ window.onload = () => {
     localStorage.setItem("getBoard", "true");
 };
 class Board {
-    constructor(bno) {
+    constructor(bno, userId) {
         this.bno = bno;
+        this.userId = userId;
         this.title = document.querySelector("input[name=title]");
         this.content = document.querySelector("textarea[name=content]");
         this.writer = document.querySelector("input[name=writer]");
@@ -32,10 +33,16 @@ class Board {
         })
             .then((response) => response.json())
             .then((result) => {
+            var _a, _b;
             /**content write */
             this.title.value = result["title"];
             this.content.value = result["content"];
             this.writer.value = result["writer"];
+            //작성자가 다를경우 수정 및 삭제 불가능
+            if (result["writer"] !== userId) {
+                (_a = document.querySelector("#modify")) === null || _a === void 0 ? void 0 : _a.remove();
+                (_b = document.querySelector("#delete")) === null || _b === void 0 ? void 0 : _b.remove();
+            }
             /**files section */
             let filesArr = result["attachList"];
             const uploadRstUL = document.querySelector(".uploadResult ul");
@@ -350,13 +357,14 @@ class Board {
     }
 } //Board Class
 class Reply {
-    constructor(bno) {
+    constructor(bno, userId) {
         this.bno = bno;
+        this.userId = userId;
         this.replyData = {
             bno: String(this.bno),
             reply: "",
         };
-        this.drawReply();
+        this.drawReply(userId);
         /** btn Event */
         //add Reply
         const addReplyBtn = document.querySelector("#addReply");
@@ -472,7 +480,7 @@ class Reply {
         }
     }
     /**draw Reply List */
-    drawReply() {
+    drawReply(userId) {
         const csrfEle = document.querySelector("#csrfToken");
         let csrfToken = "";
         if (csrfEle instanceof HTMLInputElement) {
@@ -505,10 +513,12 @@ class Reply {
                     HTMLLiElem += "</div>";
                     HTMLLiElem += `<div class="replyBody">`;
                     HTMLLiElem += `<p>${i["reply"]}</p>`;
-                    HTMLLiElem += `<div class="btnWrap" data-rno='${i["rno"]}'>`;
-                    HTMLLiElem += `<button type="button" class="btn btn-default replyModify">Modify</button>`;
-                    HTMLLiElem += `<button type="button" class="btn btn-default replyDelete">Delete</button>`;
-                    HTMLLiElem += `</div>`;
+                    if (userId === i["replyer"]) {
+                        HTMLLiElem += `<div class="btnWrap" data-rno='${i["rno"]}'>`;
+                        HTMLLiElem += `<button type="button" class="btn btn-default replyModify">Modify</button>`;
+                        HTMLLiElem += `<button type="button" class="btn btn-default replyDelete">Delete</button>`;
+                        HTMLLiElem += `</div>`;
+                    }
                     HTMLLiElem += "</div>";
                     HTMLLiElem += "</div>";
                     HTMLLiElem += "</li>";

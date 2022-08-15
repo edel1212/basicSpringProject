@@ -139,7 +139,8 @@
 <script src="/resources/js/board/get.js"></script>
 <script>
 	const bno = <c:out value="${bno }"></c:out>;	
-	new Board(bno);
-	new Reply(bno);
+	const userId = '<c:out value="${userId}"></c:out>';	
+	new Board(bno, userId);
+	new Reply(bno, userId);
 </script>
 <%@include file="../includes/footer.jsp" %>

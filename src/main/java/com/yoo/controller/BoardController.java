@@ -93,10 +93,12 @@ public class BoardController {
 	
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@GetMapping("/get")
-	public String get(String bno,Model model) {
+	public String get(String bno,Model model, HttpServletRequest request) {
 		log.info("get Page");
 		log.info("bno :: " + bno);
+		HttpSession session = request.getSession();
 		model.addAttribute("bno", bno);
+		model.addAttribute("userId", session.getAttribute("userId"));
 		return "/board/get";
 	}
 	
